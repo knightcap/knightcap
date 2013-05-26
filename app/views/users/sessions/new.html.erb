@@ -1,0 +1,50 @@
+<!-- 
+	acts as the user log in and registration page
+-->
+
+<h1 id="loginLogo">:knightcap</h1> 
+
+<!-- displays notifications pertaining to user sessions -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div><!-- END notifications -->
+
+<div class="row-fluid">
+	<!-- log in form -->
+	<div class="span4 offset1 loginContainer">
+		<h2>Log In</h2>
+		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+			<%= f.email_field :email, :placeholder => "email", :title => "enter your email address", :class => "sign_in_email" %>
+			<%= f.password_field :password, :placeholder => "password", :title => "enter your password", :class => "sign_in_password"  %>
+			<% if devise_mapping.rememberable? -%>
+ 				<div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+			<% end -%>
+			<%= link_to "Forgot your password?", new_password_path(resource_name), :class => "forgotPassword" %><br />
+			<button class="red-button loginSubmit pull-right" type="submit"><%= "log in" %></button>
+			<div class="clear"></div>	  				
+		<% end %>
+	</div><!--END span6-->
+	
+	<!-- registration form -->
+	<div class="span4 offset2 loginContainer">
+		<h2>Register</h2>
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+			
+			<%= f.email_field :email, :placeholder => "email", :required => true, :title => "enter a valid email address"%>
+			<%= f.password_field :password, :placeholder => "password", :required => true, :title => "choose a password (minimum 6 characters)"%>
+			<%= f.password_field :password_confirmation, :placeholder => "confirm password",  :required => true, :title => "confirm your password"%>
+			<button class="red-button loginSubmit pull-right" type="submit"><%= "register"%></button>
+			<div class="clear"></div>
+		<% end %>
+	</div> <!--END span6-->
+</div><!--END row-fluid-->

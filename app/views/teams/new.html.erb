@@ -1,0 +1,35 @@
+<!-- 
+	allows users to create a new team
+-->
+
+<!-- displays notifications relating to creating a new team -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div> <!-- END notifications -->
+
+<div class="row-fluid">
+	<div class="span4 offset4 formBox">
+		<h2>New Team</h2>
+		<h3>You can create a new team.</h3>
+		<%= render 'form' %>
+	<div class="clear"></div>
+	</div><!--END fBox, span4 -->
+	<div class="span4"></div>
+</div><!--END row-fluid -->
+
+<!-- sets up the back link to direct back to whichever area the user came from  -->
+<% if params[:origin] == 'services' %>
+	<%= link_to 'Back', new_service_path, :class => 'bottomLinks pull-right'%>
+<% else %>
+	<%= link_to 'Back', teams_path, :class => 'bottomLinks pull-right'%>
+<% end %>

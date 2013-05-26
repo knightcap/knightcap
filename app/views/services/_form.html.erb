@@ -1,0 +1,38 @@
+<!-- 
+	form that is rendered on the new and edit service pages 
+-->
+
+<%= form_for(@service) do |f| %>
+
+	<!-- displays relevant alerts if parameters of the form are not being met upon submission -->
+	<% if @service.errors.any? %>
+		<div class="alert alert-error error_explanation">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4><%= pluralize(@service.errors.count, "error") %> prohibited this survey from being saved:</h4>
+			<ul>
+				<% @service.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div> <!-- END error error -->
+	<% end %>
+
+	<!-- field for the user to enter the service name -->
+	<%= f.label 'Service Name:' %>
+	<%= f.text_field :name, :placeholder => "enter the new service name", :id => "serviceName", :tabindex => "1"%>
+	
+	<!-- field for the user to enter the content to be included in the survey invitation email -->
+	<%= f.label 'Email Content:' %>
+	<%=	 f.text_area :email_content, :rows => 10, :placeholder => "enter the content for your email", :tabindex => "2" %>
+	
+	<!-- dropdown menu for the user to select which team is associated with the service -->
+	<%= f.label :team_id, 'Team to Associate Service With:' %>
+	<%= f.select(:team_id, (current_user.teams.collect {|p| [ p.name, p.id ]}), :selected => (myTeamSelect(@service, @myTeam)), :tabindex => "3"  )%>
+	
+	<!-- button to submit the form -->
+	
+  	<div class="actions">
+		<%= f.submit  :class => "red-button pull-right", :id => "serviceButton", :value => @buttonvalue%>
+	</div><!-- END actions-->
+	<div class="clear"></div>
+<% end %>

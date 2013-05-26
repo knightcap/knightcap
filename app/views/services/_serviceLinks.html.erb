@@ -1,0 +1,35 @@
+<!-- 
+	inner navigation menu that appears at the top of the service page 
+-->
+
+<div class="serviceLinks">		
+	
+	<div class="navbar navbar-inverse navbar-static-top">
+		<!-- creates the button that appears when the browser window shrinks below a set width -->
+		<button type="button" class="btn btn-navbar inner-btn" data-toggle="collapse" data-target=".collapse2">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		
+		<div class="nav-collapse collapse collapse2">
+			<div class="header-right2">
+				<!-- list of inner navigation links -->
+				<nav>
+					<ul class="nav nav-pills">
+						<li <% if params[:action] == "show"%> class="active" <% end %>><%= link_to "service details", :controller => "services", :action => "show" %></li>
+						<li <% if params[:action] == "index"%> class="active" <% end %>><%= link_to "survey", :controller => "surveys", :action => "index", :refresh => "true"  %></li>
+						<li <% if params[:action] == "report"%> class="active" <% end %>><%= link_to "analyse", :controller => "services", :action => "report" %></li>
+						<% if is_team_admin(@service.team)%>
+						<li <% if params[:action] == "emailListIndex"%> class="active" <% end %>><%= link_to "service settings", :controller => "surveys", :action => "emailListIndex" %></li>
+						<% end%>
+					</ul>
+				</nav> <!-- END inner navigation -->
+				<div class="clear"></div>
+			</div><!--END header-right-->
+		</div><!-- END .nav-collapse -->
+	</div><!--END navbar navbar-->
+	
+
+</div><!--END serviceLinks -->
+<div class="clear"></div>

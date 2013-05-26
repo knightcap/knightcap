@@ -1,0 +1,97 @@
+// Place all the styles related to the Settings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$ds: #666;
+
+//contentBox styling on settings pages
+.profileBox {
+    background: white;
+    padding: 35px 30px 30px 30px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+    height: 530px;
+    margin: 30px 0px 30px 0px;
+    -moz-box-shadow: 0px 1px 1px $ds;
+    -webkit-box-shadow: 0px 1px 1px $ds;
+    box-shadow: 0px 1px 1px $ds;
+}
+
+//email boxes under Global Black List
+.listBox {
+  height: 250px;
+  margin-top: 0px;
+}
+
+.bListEmail {
+  margin-top: 20px;
+}
+
+.emailList {
+   margin-top: 0px;
+}
+
+//styles the requirement identifiers on the profile settings page
+.requirements {
+   color: red;
+   font-size: 0.725em;  
+}
+
+.asterix {
+  vertical-align: super;
+}
+
+//styles the labels in the admin settings
+#role_label {
+  margin-bottom: 9px;
+}
+
+#team_label {
+  margin-bottom: 9px;
+}
+
+//styles the profile settings area on the settings page
+#userSettings {
+  margin-bottom: 30px;
+}
+
+#editUserLink {
+  margin-left: 30px;
+}
+
+//styles the cancel account area on the profile settings page
+#sadface img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+#sadMessage {
+  text-align: center;
+  font-style: 'Droid Sans';
+  font-size: 1.5em;
+  margin-top: 30px;
+}
+
+//positions buttons in line with adjacent elements
+.push-button {
+  margin-top: 5px;
+}
+
+/**** responsive styles ****/
+@media (max-width: 979px) { 
+  .listBox {
+    height: 280px;
+  }
+}
+
+@media (max-width: 767px) {
+  .profileBox {
+    height: auto;
+  }
+  
+  .listBox {
+     height: auto;
+  }
+}

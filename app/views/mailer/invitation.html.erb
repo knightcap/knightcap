@@ -1,0 +1,11 @@
+<!--
+	content of the survey invitation email that is sent out via the send survey page
+-->
+
+<p>Hello <%= @email %>,</p> <!-- the recipients email address -->
+<br>
+<p><%= @service.email_content %></p> <!-- email content written by the pertinent team/team members is inserted here -->
+<p><a href="<%= @url.html_safe %>"><%= @url.html_safe %></a></p> <!-- an unique URL to the survey is inserted here -->
+<br>
+<p>Regards,</p>
+<p>The <%= @service.name %> Team</p> <!-- signs off the email with the service team name -->

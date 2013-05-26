@@ -1,0 +1,56 @@
+<!-- 
+	page displayed to user when they have completed a survey
+-->
+
+<%= stylesheet_link_tag    "application", :media => "all" %> <!-- adds styling to the submitSurvey page, as page is external to the main application -->
+
+
+<div id="stickyWrap">	<!-- pushes footer to bottom of the browser -->
+	<div class="container">
+		<div class="row-fluid span12">
+			<h1>Survey for <%= @service.name %></h1>
+			
+			<!-- displays alerts related to survey completion -->
+			<div class="notifications">
+				<% if flash[:alert].present? %>
+					<div class="alert alert-error">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= alert %>
+					</div> <!-- END alert-error -->
+				<% elsif flash[:notice].present? %>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= notice %>
+					</div> <!-- END alert-success -->
+				<% end %>
+			</div> <!-- END notifications -->
+			
+			<!-- displays thank you message after the survey has been completed -->
+			<div class="row-fluid">
+				<div class="span8 offset2 contentBox">
+					<p id="thankYou">Thank you</p>
+					<p id="surveyMessage">for taking the time to complete this survey.</p>
+					<div id="smiley"><img src="assets/smileyface.png" alt="smiling emoticon"></div>
+				</div> <!-- END span8 contentBox -->
+				<div class="span2"></div> <!-- empty span to keep contentBox positioned correctly -->
+			</div> <!-- END row-fluid -->
+		</div> <!-- END row-fluid span12 -->
+	</div> <!-- END container -->
+	
+	
+	<div id="push"></div> <!-- Used for pushing page content down when necessary for sticky footer -->
+</div> <!-- End of stickyWrap -->
+
+<!-- displays footer containing only footer text -->
+<footer>	
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="footertext">
+					<p>:knightcap In-Dev 0.5.5 | Programmers of the Round Table</p>
+				</div> <!-- END footertext -->
+			</div> <!--END span12-->
+		</div> <!--ENd row-fluid-->
+	</div> <!--END container-->
+</footer> <!-- END footer -->
+	

@@ -1,0 +1,47 @@
+<!--  
+	Page to change password
+	NOT CURRENTLY USED IN APPLICATION
+-->
+
+<h1 id="loginLogo">:knightcap</h1> 
+
+<!-- displays notifications pertaining to change of password -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div><!-- END notifications -->
+
+<div class="row-fluid">
+	<div class="span4 offset4 formBox">
+	
+		<h2>Change your password</h2>
+		
+		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+		  <!-- checks where the user has come from -->
+		  <%= devise_error_messages! %>
+		  <%= f.hidden_field :reset_password_token %>
+		
+		  <!-- field for user to choose  -->
+		  <div><%= f.label :password, "New password"%><br />
+		  <%= f.password_field :password %></div>
+		  
+		  <!-- confirmation field for new password -->
+		  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
+		  <%= f.password_field :password_confirmation %></div>
+		
+		  <!-- button to submit changes -->		
+		  <div><%= f.submit "Change my password"%></div>
+		<% end %>
+	</div><!--END fBox, span4 -->
+	<div class="span4"></div>
+</div><!--END row-fluid -->
+

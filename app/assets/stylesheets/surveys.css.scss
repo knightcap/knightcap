@@ -1,0 +1,159 @@
+// Place all the styles related to the Survey controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$ds: #666;
+$mainblue: #228b98;
+$darkblue: #476569;
+$shadow: #434849;
+$footerc:#303a3b;
+$roundedpx: 3px;
+$linkc:#476569;
+$red: #ae4729;
+$hoverred: #bc4b2a;
+
+//contentBox styling for survey page
+.surveyBox {
+    background: white;
+    padding: 35px 30px 30px 30px;
+    height: 300px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 20px 0px 10px 0px;
+    -moz-box-shadow: 0px 1px 1px $ds;
+    -webkit-box-shadow: 0px 1px 1px $ds;
+    box-shadow: 0px 1px 1px $ds;
+}
+
+//styles the csv area
+#uploadButton {
+  margin-top: 50px;
+}
+
+//styling for survey thank you page
+#thankYou {
+    font-size: 6.25em;
+    font-style: 'sertigregular';
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    line-height: 80px;
+}
+
+#surveyMessage {
+  font-size: 1.875em;
+  font-style: 'Droid Sans';
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  line-height: 30px;
+  margin-top: 50px;
+}
+
+#smiley {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+#smiley img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  max-width: 50%;
+}
+
+//styling on the user survey
+.nps {
+  
+  ul {
+  list-style-type: none;
+  float: left;
+  margin: 0px 0px 50px 20px;
+  }
+  
+  li {
+    margin-right: 20px;
+    line-height: 30px;
+  }
+}
+
+input[type="radio"] {
+   margin: -4px 0px 0px 0px;
+}
+
+//fixes the delete icon in the service settings tables
+//styles delete 'x' in tables
+.listIcon {
+  color: $red;
+  font-size: 0.5ems;
+  background: transparent;
+  border: none; 
+  padding: 7px 8px 3px 8px; 
+  font-weight: bold;
+  margin: 10px;
+}
+
+.listIcon:hover {
+  -webkit-box-shadow: 1px 1px 0px 0px #303a3b;
+  box-shadow: 1px 1px 0px 0px #303a3b;
+  text-decoration: none;
+}
+
+.listIcon:active {
+  -webkit-box-shadow: inset 1px 1px 0px 0px #303a3b;
+  box-shadow: inset 1px 1px 0px 0px #303a3b;
+}
+
+//pulls csv button up to sit in line with other buttons
+.blist-button-up {
+  margin-top: -5px;
+}
+
+.dlist-button-up {
+  margin-top: 10px;
+}
+
+
+/**** responsive styles ****/
+@media (max-width: 979px) {   
+  .collapse2 {
+  float: left;
+  margin-left: 20px;
+  }
+
+  div.header-right2 {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  
+  #thankYou {
+    font-size: 3.125em;
+    line-height: 50px;
+  }
+
+  #surveyMessage {
+    font-size: 1em;
+    line-height: 20px;
+    margin-top: 30px;
+  }
+  
+  .surveyBox {
+    height: auto;
+  }
+  
+  .create {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .serviceLinks .navbar-inverse .btn-navbar {
+    margin-top: -70px;
+  }
+  
+}

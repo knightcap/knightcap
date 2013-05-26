@@ -1,0 +1,113 @@
+<!-- 
+	Repsonse Chart display	
+-->
+
+<h2>NPS Score and Response History</h2>
+<div class="row-fluid span12 chart">
+	<p id="responseChart" class="truncate"></p>
+</div>
+
+
+<script>
+	$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'responseChart',
+                zoomType: 'xy',
+            	backgroundColor: '#ffffff',
+            	alignTicks: false
+            },
+            title: {
+                text: ''
+            },
+            xAxis: [{
+                categories: [
+                <% response.keys.each do |k| %>
+                '<%=k%>',
+                <%end%>],labels: {
+                    rotation: -45,
+                    align: 'right'
+                }
+            }],
+            yAxis: [{ // Primary yAxis
+            	
+                min: 0,
+            	allowDecimals: false,
+            	minTickInterval: 1,
+                title: {
+                    text: 'Total responses',
+                    style: {
+                        color: '#228b98'
+                    }
+                },
+                labels: {
+                    style: {
+                        color: '#228b98'
+                    }
+                    
+                },
+            }, { // Secondary yAxis
+        		min: -100,
+        		max: 100,
+        		gridLineWidth: 0,
+                opposite: true,
+                labels: {
+                    style: {
+                        color: '#228b98'
+                    }
+                },
+                title: {    
+                	text: 'NPS Score',
+                    style: {
+                        color: '#228b98'
+                    }
+                }
+            }],
+            tooltip: {
+                formatter: function() {
+                    return ''+ (this.series.name) + ": " + this.y;
+                },
+                
+            },
+            legend: {
+                layout: 'vertical'
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+            series: [{
+                name: 'Detractors',
+                type: 'column',
+                color: '#b94a48',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["detractors"]%>,<%end%>
+                ]
+            },{
+                name: 'Neutrals',
+                type: 'column',
+                color: '#3a87ad',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["neutrals"]%>,<%end%>]
+            }, {
+                name: 'Promoters',
+                type: 'column',
+                color: '#468847',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["promoters"]%>,<%end%>]
+            }, {
+                name: 'Average NPS Score',
+                color: '#c09853',
+                yAxis: 1,
+                type: 'line',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["average"]%>,<%end%>]
+            }]
+        });
+    });
+    
+});
+</script>

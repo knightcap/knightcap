@@ -1,0 +1,46 @@
+<!-- displays settings relevant for a site-wide admin -->
+
+<h2>Add User</h2>
+<h3>Create a new user. A password will be auto generated, and a welcome email with user details will be sent to the email address provided.</h3>
+
+<%= form_tag( settings_path, :method => "post") do %>
+	<div class "row-fluid">
+		<div class="span6">
+			<%= label_tag(:new_user_email, "Email", :class => "pull-left")%><span class="requirements asterix">*</span> <!-- END requirements asterix -->
+			<div class="clear"></div>
+			<%= text_field_tag(:new_user_email, nil, { :tabindex => "1" }) %>
+			<div class="clear"></div>
+		</div> <!-- END span6 -->
+
+		<div class="span2">
+			<%= label_tag(:new_user_role, "Site Wide Role", :class => "pull-left", :id => "role_label") %><span class="requirements asterix">*</span> <!-- END requirements asterix -->
+			<div class="clear"></div>
+			<%= select_tag(:new_user_role, options_for_select(@roles.collect {|role| [ role.name, role.id ]}, @default_role))%>
+		</div> <!-- END span2 -->
+		
+		<div class="span2">
+			<%= label_tag(:new_user_team, "Team", :id => "team_label") %>
+			<%= select_tag(:new_user_team, options_for_select(@teams.collect {|team| [ team.name, team.id ]}), {:include_blank => true},)%>
+		</div> <!-- END span2 -->
+		<div class="span2 push-button"><%= submit_tag("create user", :class => "red-button pull-right") %></div> <!-- empty span2 to position other spans -->
+	</div> <!-- END row-fluid -->
+
+
+	<div class="clear"></div>
+	<p class="requirements">Fields marked with an asterix(*) must be completed.</p>	
+	<div class="clear"></div>
+	
+	<div class="row-fluid">
+		<div class="span12 bListEmail">
+			<h2> Global Blacklist</h2>
+			<h3> Edit emails stored on the Global Black List</h3>
+			
+			<p>Emails added to the global black list can not be added to the survey email list of any service within the application.</p>
+			<%= link_to "edit black list", {:controller => "settings", :action => "gblistIndex"}, {:class => "red-button pull-right"} %>
+			<div class="clear"></div>
+		</div> <!-- END span12 -->
+	</div> <!-- END row-fluid -->
+
+	
+	
+<% end %>

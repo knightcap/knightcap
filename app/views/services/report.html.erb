@@ -1,0 +1,38 @@
+<!--
+	allows the user to create reports from 
+-->
+
+<div class="serviceHeadings">
+	<h1 class="service">Reports</h1>
+	<h2 class="serviceName" class="pull-left"><%= @service.name%></h2>
+</div> <!-- END serviceHeadings
+	 -->
+<%= render 'serviceLinks'%> <!-- renders the inner navigation for single service -->
+	
+	<!-- displays report alerts -->
+	<div class="notifications">
+		<% if flash[:alert].present? %>
+			<div class="alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<%= alert %>
+			</div> <!-- END alert-error -->
+		<% elsif flash[:notice].present? %>
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<%= notice %>
+			</div> <!-- end alert-success -->
+		<% end %>
+	</div> <!-- end notifications -->
+	
+<div id = "reportAll">
+<%= render :partial => 'services/reportTemplates/charts' %>
+
+</div><!--END reportAll  -->
+<%= render "servicebottomlinks"%>
+
+<!-- fixes issues with background browser height -->
+<style>
+	body {
+		height: auto;
+	}
+</style>

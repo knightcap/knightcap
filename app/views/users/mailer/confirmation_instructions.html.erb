@@ -1,0 +1,14 @@
+<!--
+	Instruction email for confirmation
+	NOT CURRENTLY USED IN APPLICATION
+-->
+
+<p>Welcome <%= @resource.email %>!</p>
+<br>
+<p>This email has recently been used to create an account with Knightcap. You can confirm use of this email for Knightcap by clicking the link at the bottom of this email.</p>
+<p>If you did not provide permission for this email to be used by Knightcap, simply ignore this email.</p>
+<br>
+<p>Regards</p>
+<p>The Knightcap Team</p>
+<br>
+<p><%= link_to 'Confirm account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>

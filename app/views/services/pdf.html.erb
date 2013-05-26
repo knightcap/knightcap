@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "xhtml11.dtd">
+
+<!-- generates a .pdf file containing report charts -->
+<html debug="true">
+<head>
+<title>Report</title>
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+
+<% 
+    @date = params[:post]
+    @start = DateTime.parse(@date["start"])
+    @end = DateTime.parse(@date["end"])
+   response = get_nps_response(@start, @end, @date["step"])
+   pdn = get_pdn_values(@start, @end)
+   words = get_words_used(@start,@end)
+
+%>
+
+<!-- response chart-->
+<script type="text/javascript">
+
+(function($){ // encapsulate jQuery
+
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'responseChart',
+                zoomType: 'xy',
+            	backgroundColor: '#ffffff',
+            	alignTicks: false
+            },
+            title: {
+                text: 'NPS Score and Response History',
+		    style: {
+                        color: '#476569',
+			font: 'Droid Sans',
+                    }
+            },
+            xAxis: [{
+                categories: [
+                <% response.keys.each do |k| %>
+                '<%=k%>',
+                <%end%>]
+            }],
+            yAxis: [{ // Primary yAxis
+            	
+                min: 0,
+            	allowDecimals: false,
+            	minTickInterval: 1,
+                title: {
+                    text: 'Total responses',
+                    style: {
+                        color: '#228b98'
+                    }
+                },
+                labels: {
+                    style: {
+                        color: '#228b98'
+                    }
+                },
+            }, { // Secondary yAxis
+        		min: -100,
+        		max: 100,
+        		gridLineWidth: 0,
+                opposite: true,
+                labels: {
+                    style: {
+                        color: '#228b98'
+                    }
+                },
+                title: {    
+                	text: 'NPS Score',
+                    style: {
+                        color: '#228b98'
+                    }
+                }
+            }],
+            tooltip: {
+                formatter: function() {
+                    return ''+ (this.series.name) + ": " + this.y;
+                },
+                
+            },
+            legend: {
+                layout: 'vertical'
+            },
+            plotOptions: {
+                series: { enableMouseTracking: false, shadow: false, animation: false } 
+            },
+            series: [{
+                name: 'Detractors',
+                type: 'column',
+                color: '#b94a48',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["detractors"]%>,<%end%>
+                ]
+            },{
+                name: 'Neutrals',
+                type: 'column',
+                color: '#3a87ad',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["neutrals"]%>,<%end%>]
+            }, {
+                name: 'Promoters',
+                type: 'column',
+                color: '#468847',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["promoters"]%>,<%end%>]
+            }, {
+                name: 'Average NPS Score',
+                color: '#c09853',
+                yAxis: 1,
+                type: 'line',
+                data: [<% response.keys.each do |k| %>
+                <%=response[k]["average"]%>,<%end%>]
+            }]
+        });
+    });
+    
+});
+    
+
+})(jQuery);
+</script>
+
+<!--word cloud chart -->
+<script src="http://www.lucaongaro.eu/demos/jqcloud/jqcloud-1.0.0.min.js"></script>
+ <script type="text/javascript">
+var word_list = [
+	<% 
+		i = 0
+		words.each do |k,v|
+	          i+=1	
+        %>
+                  {text: "<%=k%>", weight: <%=v%>}
+                  <% if i < words.size %>,<% end%> 
+                <% end %>
+   // ...other words
+];
+
+$(document).ready(function() {
+   $("#cloud").jQCloud(word_list,{
+
+   delayedMode: false
+
+});
+});
+</script>
+
+<!--pdnChart -->
+<script>
+
+(function($){ // encapsulate jQuery
+
+$(function () {
+    
+    $(document).ready(function() {
+            var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'pdnChart',
+            //alignTicks: false,
+            type: 'bar',
+            backgroundColor: '#ffffff'
+        },
+    colors: ['#468847', '#3a87ad', '#b94a48'],
+        title: {
+            text: "Promoters VS Detractors VS Neutral ",
+		    style: {
+                        color: '#476569',
+			font: 'Droid Sans',
+                    }
+        },
+        plotOptions: {
+        	series: { enableMouseTracking: false, 
+        		shadow: false, 
+        		animation: false},
+        	
+        	bar: {colorByPoint: true}
+        },
+        xAxis: {
+            categories: ['Promoters', 'Neutral', 'Detractors']
+        },
+        yAxis: {
+            title: {
+                text: 'Responses'
+            },
+            gridLineWidth: 0,
+            min:0,
+            allowDecimals: false,
+            minTickInterval: 1
+        },
+        tooltip: 
+        {
+           formatter: function() {
+                return ''+ (this.series.name) + ": " + this.y;
+            },
+        },
+        legend: {
+            enabled: false
+        },
+        series: [{
+            data: <%= pdn["pdn"] %>,
+        }]
+    });
+            
+   
+ });
+    
+});
+    
+
+})(jQuery);
+</script>
+
+
+</head>
+
+
+<body>
+<div id="demo-content">
+<h1>Knightcap Service Report</h1>
+<h2> <%= @service.name%></h2>
+<h3><%= @start.strftime("%B %d, %Y") %> - <%= @end.strftime("%B %d, %Y")%></h3>
+
+<div id="responseChart"></div>
+<br>
+
+<div id="pdnChart"></div>
+<br>
+<h4> Words Count Chart </h4>
+<div id="cloud" style="width: 550px; height: 350px; margin: 0 auto;"></div>
+
+   
+
+</div>
+
+
+</body>
+
+</html>
+

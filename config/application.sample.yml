@@ -1,0 +1,27 @@
+
+# Be sure to restart your server when you modify this line.
+
+# Your secret key for verifying the integrity of signed cookies.
+# If you change this key, all old signed cookies will become invalid!
+# Make sure the secret is at least 30 characters and all random,
+# no regular words or you'll be exposed to dictionary attacks.
+SECRET_TOKEN: "c10d586a1alkjdl43kj3yt96d89s9ss08d08f0ssc489322b957f11e53EXAMPLE"
+
+# This setting is an admin setting for the Exchange endoint
+EWS_ENDPOINT: "https://exchange.example.com/ews/exchange.asmx"
+
+
+# This line is used when your application is in a sub directory on the server, example www.example.com/app.
+# In the above example, you would write "/app" in the space below. Take note of the initial forward slash.
+# If your app is not in a sub directory, then you can leave the item below as an empty string.
+SUB_DIRECTORY: ""
+
+
+# These are the SMTP settings for the outgong email address. 
+SMTP_ADDRESS: "smtp.example.com"
+SMTP_PORT: "587" #default is "587"
+SMTP_DOMAIN: "example.com"
+SMTP_AUTHENTICATION: "plain" #default is "plain"
+SMTP_ENABLE_STARTTLS_AUTO: "true" #default is 'true'
+SMTP_USER_NAME: "Email user" #the username for the smtp account
+SMTP_PASSWORD: "password" #the password for the smtp account

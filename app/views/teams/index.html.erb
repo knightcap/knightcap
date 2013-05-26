@@ -1,0 +1,89 @@
+<!--
+  	users teams area split into tables of team admin teams and team member teams
+-->
+
+<%= link_to 'new team', new_team_path, :class => 'red-button pull-right'%> <!-- button link to create a new team -->
+
+<h1>Teams List</h1>
+
+<!-- displays notifications relevant to teams -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div><!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div> <!-- END notifications -->
+
+
+<div class="row-fluid">
+	<!-- team admin teams list -->
+	<div class="contentBox teamContent span12">
+		<h2>My Teams (Admin)</h2>
+		<h3>Teams that you hold administrator privileges with.</h3>
+			<% if @adminTeams.size == 0%> 
+				<p>You do not currently hold administrator privileges with any teams.</p>
+			<% else%>
+			<table>
+				<tr>
+					<th class="truncate">Name</th>
+					<th class="truncate">Edit</th>
+					<th class="truncate pull-right">Remove</th>
+				</tr>
+				
+				<% @adminTeams.each do |team| %>
+					<tr>
+						<td class="truncate link"><%= link_to team.name, team %></td>
+						<td class="truncate link"><%= link_to 'Name', edit_team_path(team) %></td>
+						<td>
+							<%= link_to raw("<i class='icon-remove'></i>"), team, method: :delete, :class => 'icon pull-right', data: { confirm: 'Are you sure you want to delete this team?' } %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+			<% end %>
+			
+		<div style="clear: both;"></div>
+	</div> <!-- END contentBox teamContent-->
+</div> <!-- END row-fluid -->
+			
+<div class="row-fluid">
+	<div class="contentBox teamContent span12">
+		<h2>My Teams (Member)</h2>
+		<h3>Teams that you hold member-only privileges with.</h3>
+			<% if @teams.size == 0%> 
+				<p class="teams-topmargin">You do not currently hold member-only privileges with any teams.</p>
+			<% else%>
+			<table>
+				<tr>
+					<th class="truncate">Name</th>
+				</tr>
+				<% @teams.each do |team| %>
+					<tr>
+						<td class="truncate link"><%= link_to team.name, team %></td>
+					</tr>
+				<% end %>
+			</table>
+		
+			<% end %>
+		
+		<div style="clear: both;"></div>
+
+	</div><!-- END contentBox teamContent -->
+</div> <!-- END row-fluid -->
+
+<script>
+	// temp fix for body height
+	if ($('body').height() <= 760 ) {
+		$("body").css("height", "auto");
+	} else {
+		$("body").css("height", "100%");
+	}
+</script>
+

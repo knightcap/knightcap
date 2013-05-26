@@ -1,0 +1,14 @@
+<!-- 
+	Instructions to unlock a user account
+	NOT CURRENTLY USED BY APPLICATION
+-->
+
+<p>Hello <%= @resource.email %>!</p>
+<br>
+<p>Your Knightcap account has recently been locked due to an excessive amount of unsuccessful sign in attempts.</p>
+<p>Your account can be unlocked by clicking the link provided at the bottom of this email.</p>
+<br>
+<p>Regards,</p>
+<p>The Knightcap Team</p>
+<br>
+<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>

@@ -1,0 +1,19 @@
+ <!-- 
+ 	ews pop up box
+ -->
+
+<!-- displays alerts related to the ews pop up content -->
+<div class="notifications">
+	<div class="alert alert-error">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<%= alert %>
+	</div>  <!-- END alert-error -->
+	<div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<%= notice %>
+	</div>  <!-- END alert-success -->
+</div>	 <!-- END notifications -->
+
+<%= params %>
+
+<%= @f %>

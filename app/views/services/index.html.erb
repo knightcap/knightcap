@@ -1,0 +1,106 @@
+<div class="row-fluid">
+	<div class="span9 serviceArea">
+		
+		<!-- displays a message if the user currently has no services associated with their account -->
+		<% if @teamServices.empty? %>
+			<!-- displays alerts -->
+			<div class="notifications" id="emptyServiceNote">
+				<% if flash[:alert].present? %>
+					<div class="alert alert-error">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= alert %>
+					</div>  <!-- END alert-error -->
+				<% elsif flash[:notice].present? %>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= notice %>
+					</div>  <!-- END alert-success -->
+				<% end %>
+			</div>  <!-- END notifications -->
+			
+			<p class="pull-left" id="emptyServices">You don't seem to have any Services yet. Why not <%= link_to 'create', new_service_path, :class => "link" %> one?</p>
+		
+		<!-- otherwise displays all associated services -->
+		<% else %>
+			<%= link_to 'new', new_service_path, :class => 'red-button pull-right create' %>
+			<h1>Team Services</h1> 
+			
+			<!-- displays alerts -->
+			<div class="notifications">
+				<% if flash[:alert].present? %>
+					<div class="alert alert-error">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= alert %>
+					</div>  <!-- END alert-error -->
+				<% elsif flash[:notice].present? %>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= notice %>
+					</div>  <!-- END alert-success -->
+				<% end %>
+			</div>  <!-- END notifications -->
+			
+			<!--creates a serviceBox for each associated service -->
+			<% count = 0 %>
+			<% @teamServices.each do |service| %>
+				<% if count == 0 %>
+					<div class="row-fluid">
+				<% end %>
+					<div class="serviceBox span4">
+						<%= link_to service.name, service, :class => "serviceLink link" %>
+						<span class="serviceScore"><%= link_to get_score(service), service, :class => "noLink"%><%= link_to '%', service, :class => "noLink" %></span>
+						<div class="serviceTrend" style="background-position:<%=trend_style(service)%>px 0px"></div>
+					</div> <!-- END serviceBox span4 -->
+					<% if count == 2 %>
+					</div>  <!-- END row-fluid -->
+					<% end %>
+					
+				<% count += 1 %>
+				
+				<!-- begins a new line of services once 3 services exist on a line -->
+				<% if count == 3 %>
+					<% count = 0 %>
+				<% end %>
+			
+			<% end %>
+			
+			<% if count != 0 #Must mean that the above loop has run and we are in the middle of a non closed row-fluid %>
+				</div>
+			<% end %>
+</div><!--END span9 serviceArea -->
+	<div class="span3 widgetArea">
+			<h1 class="widgetH">Overview</h1>
+			
+			<%= render 'widgets/widgets' %>
+
+	</div> <!-- END span3 widgetArea -->
+		<% end %>
+	</div><!--END span9-->
+
+</div><!--END row-fluid-->
+
+<script>
+	// Fix for widget area height issues on larget displays. one time run. 
+	// Repeat is done in the application layout view, bound to window resize event.
+	var amendedHeight = $(window).height() - 128 - 102;
+	if ( amendedHeight > $(".widgetArea").height() ) {
+		$(".widgetArea").height(amendedHeight);
+	}
+	
+	// temp fix for body height
+	if ($('body').height() <= 760 ) {
+		$("body").css("height", "auto");
+	} else {
+		$("body").css("height", "100%");
+	}
+	
+	// temp footer fix on service#index
+	$(document).ready(function() {
+		if ($(document).height() >= 992) {
+			$('footer').css('margin-top', "-128px");
+		} else if ($(document).height() >= 864) {
+			var margin = $(document).height() - 864;
+			$('footer').css('margin-top', "-" + margin + "px");
+		}
+	});
+</script>

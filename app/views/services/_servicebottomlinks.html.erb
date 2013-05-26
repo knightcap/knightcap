@@ -1,0 +1,13 @@
+<!-- 
+	links appearing at the base of the service show page
+-->
+
+<div class="bottomLinks pull-right">
+	<p>
+		<% if is_team_admin(@service.team)%>
+			<%= link_to 'Delete', @service, method: :delete, data: { confirm: 'Are you sure you want to delete this service?' } %> |
+			<%= link_to 'Edit', edit_service_path(@service) %> |
+		<% end %>
+		<%= link_to 'Home', services_path %> 
+	</p>
+</div> <!--END bottomLinks-->

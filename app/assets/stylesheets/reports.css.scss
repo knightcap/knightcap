@@ -1,0 +1,88 @@
+// Place all the styles related to the Reports controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+//sets the initial height for the content boxes
+.reportBox {
+  height: 530px;
+}
+//positions the word chart
+#words {
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+//positions the response chart
+#responseChart {
+  margin-top: 20px;
+}
+  
+//positions the pdn chart  
+#pdnChart {
+  margin-top: 20px;
+}
+
+//styles the drop down boxes on Report page
+#start_start_3i, #end_end_3i {
+  width: 60px;
+}
+
+#start_start_2i, #end_end_2i {
+  width: 115px;
+}
+
+#start_start_1i, #end_end_1i {
+  width: 80px;
+}
+
+#step_step {
+  width: 90px;
+}
+
+.date {
+  margin-left: 25px;
+}
+
+
+/**** responsive styles ****/
+@media (max-width: 1220px) {
+  .reportBox {
+    height: 600px;
+  }
+  
+  .chart {
+    margin-top: 30px;
+  }
+  
+}
+
+@media (max-width: 979px) { 
+  .upperReports {
+    height: 630px;
+  } 
+  
+  .lowerReports {
+    height: 580px;
+  }
+  
+  .reportBox {
+    height: 700px;
+  }
+  
+
+ 
+}
+
+@media (max-width: 767px) {
+  .reportBox {
+    height: auto;
+  }
+}
+
+@media (max-width: 420px) {
+    .chart {
+    margin-top: 10px;
+  }
+  
+}

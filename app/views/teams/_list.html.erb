@@ -1,0 +1,124 @@
+<!-- 
+	if team member, allows users to view other team members 
+	if team admin, allows user to edit team details
+-->
+<% if params[:action] != "show" %>
+	<!-- displays notifications pertinent to team details -->
+	<div class="notifications">
+		<% if flash[:alert].present? %>
+			<div class="alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<%= alert %>
+			</div> <!-- END alert alert-error -->
+			<% elsif flash[:notice].present? %>
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<%= notice %>
+			</div> <!-- END alert alert-success -->
+		<% end %>
+	</div> <!-- END notifications -->
+<% end %>
+
+<!-- table containing team details -->
+<table style="table-layout: fixed;">   
+	<tr>
+		<th class="truncate">Members</th>
+		<th class="truncate">Roles</th>
+			<!-- displays extra columns if user is team admin -->
+		<% if is_team_admin(@team.id)%>
+			<th class="truncate">Change Role</th>
+			<th class="truncate pull-right">Remove</th>
+		<% end %>
+	</tr>
+	
+	<!-- creates a row for each team member -->
+	<% i = 0 %>
+	<% @team.users.each do |teammember| %>
+		<tr>
+			<td class="truncate"><%= teammember.email %></td>
+			
+			<!-- adds extra options if user is team admin -->
+			<% if is_team_admin(@team.id) && (current_user!= teammember) %>
+				<td class="truncate" id ="role<%= i.to_s %>"><%= teammember.teamsusers.find_by_team_id(@team.id).role %></td>
+			
+				<!-- show promote or revoke according to role -->
+				<td>
+					<% if teammember.teamsusers.find_by_team_id(@team.id).role == "member"%>
+					<%= link_to raw("<i class='icon-star'></i>"), 'javascript:;', :title => "promote to admin", :class => 'update tableButton icon', :id => "updateTeam" + i.to_s %>
+
+				<% else %>
+				<%= link_to raw("<i class='icon-ban-circle'></i>"), 'javascript:;', :title => "revoke admin privileges", :class => 'update tableButton icon', :id => "updateTeam" + i.to_s %>
+                <% end %>
+				
+			</td>
+			<td>
+				<%= link_to raw("<i class='icon-remove'></i>"), 'javascript:;', :title => "delete team member", :class => 'delete icon pull-right', :id => "deleteTeam" + i.to_s %>
+			</td>
+			
+				<!--Team member name -->
+				<%= hidden_field_tag("team", @team.id, :id => "team" + i.to_s)%>
+				<%= hidden_field_tag("member", teammember.id, :id =>"member"+ i.to_s)%>
+				<% i = i + 1 %>
+				
+			<% else%>
+				<td><%= teammember.teamsusers.find_by_team_id(@team.id).role %></td>
+				<% if is_team_admin(@team.id) && (current_user== teammember)  %><td></td><td></td><%end%>
+			<% end %>
+		</tr>
+	<% end %>
+</table>
+<%= hidden_field_tag("teamid",@team.id)%>
+<% @tags = User.all.map(&:email)%>
+
+
+
+<script>
+
+//delete member
+	$(".delete").click(function(){
+		
+  		var buttonId = this.id.substr(10)
+  		var r=confirm("Remove this member from the team?");
+		if (r==true)
+		{
+	  		$.ajax({
+	  			type: 'GET',
+	  			url: "<%= params[:id] %>/deleteMember", 
+		  		data: {
+		  			team:$("#team"+buttonId).val(), 
+		  			member:$("#member"+buttonId).val()
+	  			},
+	  			dataType: "text",
+	  			success: function(data, status, xhr) {
+	  				
+	  				$("#members").html(data);
+	  			}
+	  		});
+	  	}
+  	});
+
+
+//ajax request
+	$(".update").click(function(){
+		
+  		var buttonId = this.id.substr(10)
+  		var r=confirm("Are you sure you want to change the role of this user?");
+		if (r==true)
+		{
+	  		$.ajax({
+	  			type: 'GET',
+	  			url: "<%= params[:id] %>/updateTeam", 
+		  		data: {
+		  			team:$("#team"+buttonId).val(), 
+		  			member:$("#member"+buttonId).val()
+	  			},
+	  			dataType: "text",
+	  			success: function(data, status, xhr) {
+	  				$("#members").html(data);
+	  			}
+	  		});
+	  	}
+  	});
+$("tr:odd").css("background-color", "rgb(245, 248, 248");
+</script>
+

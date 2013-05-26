@@ -1,0 +1,33 @@
+<!--
+	user can edit the name of a team
+-->
+
+<!-- displays notifications relevant to editing a team -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div> <!-- END notifications -->
+
+<div class="row-fluid">
+	<div class="span4 offset4 formBox">
+		<h2>Edit Team</h2>
+		<h3>You can edit the name of this team.</h3>
+		<%= render 'form' %>
+	</div><!--END fBox, span4 -->
+	<div class="span4"></div>
+</div><!--END row-fluid -->
+
+<!-- extra function links below page content -->
+<div class="bottomLinks pull-right">
+	<%= link_to 'View Team', @team %> |
+	<%= link_to 'Back to Teams', teams_path %>
+</div>

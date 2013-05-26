@@ -1,0 +1,93 @@
+<!-- 
+	displays information about one service
+-->
+
+<!-- ews pop up to login to Exchange -->
+<div id="ews-login" class="modal hide fade in" style="display: none; ">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3 style="color: transparent;">Exchange Login</h3>
+	</div> <!-- END modal-header -->
+	<div class="modal-body">
+		<% if ENV["EWS_ENDPOINT"].present? %>
+			<h2>EWS Login</h2>
+			<h3>Login to Exchange to select a folder to monitor</h3>
+			<%= form_tag( service_path, :method => "post") do %>
+				<%= label_tag(:user_name, "Username:") %>
+				<%= text_field_tag(:user_name, nil, :tabindex => "1") %>
+				<%= label_tag(:password, "Password:") %>
+				<%= password_field_tag(:password, nil, :tabindex => "2") %>
+				<%= submit_tag("login", :class => "red-button pull-right") %>
+			<% end %>
+		<% else %>
+			<p style="text-align: center">Sorry, your administrator has not enabled Exchange Access</p>
+		<% end %>
+	</div> <!-- END modal-body -->
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+	</div> <!-- end modal-footer -->
+</div> <!-- END modal hide fade in -->
+		
+
+<div class="serviceHeadings">
+	<h1 class="service"><%= @service.name %></h1>
+	<h2 class="teamName" class="pull-left"><%= @service.team.name %> Team</h2>
+</div> <!-- END serviceHeadings -->
+<div class="clear"></div>
+
+<%= render 'serviceLinks'%> <!-- renders the inner navigation for single service -->
+
+<!-- displays service alerts -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert-error -->
+	<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- end alert-success -->
+	<% end %>
+</div> <!-- END notifications -->
+
+<div class="row-fluid">
+	
+	<div class="span6 serviceContent">
+		<h2>Monitored Inbox Folder</h2>
+		<h3>This is the email folder you would like to monitor for customers.</h3>
+
+		<!-- displays the choose monitored folder dropbox if Exchange has been logged in to -->
+		<% if @choose_folder.present? %>
+			<p>Please select a folder from the list below.</p>
+			<%= form_tag service_path, :id => "ews_form" do %>
+  				<%= label_tag(:ews_select, "Exchange Folder") %>
+  				<%= select_tag(:ews_select,options_for_select(@ews_folders.collect {|f| [ f[1], f[0] ]}, @ewsID), {:include_blank => true})%>
+  				<div><%= submit_tag("select folder", :class => "red-button pull-right") %> </div>
+			<% end %>
+		
+		<!-- displays the monitored email folder if a folder has already been selected -->
+		<% elsif @have_folder.present? %>
+			<p>Currently monitoring the folder: <strong><em><%= @have_folder %>.</em></strong></p>
+			<p><a data-toggle="modal" href="#ews-login" class="red-button pull-right">change folder</a></p>
+
+		<!-- displays the Exchange option if Exchange has not been logged in to -->
+		<% elsif @no_folder.present?%>
+			<p>You do not have a folder selected for monitoring. Click the button below to select one.</p>
+			<p><a data-toggle="modal" href="#ews-login" class="red-button pull-right">select folder</a></p>
+		<% end %>
+		<div class="clear"></div>
+	</div> <!-- END span6 serviceContent -->
+	
+	<!-- displays the email content entered upon creation or editing of the service -->
+	<div class="span6 serviceContent">
+		<h2>Email content:</h2>
+		<h3>This is the message that will be slotted into the email template.</h3>
+		<p><%= @service.email_content %></2>	
+	</div> <!-- END span6 serviceContent -->
+			
+</div> <!-- END row-fluid -->
+
+<%= render "servicebottomlinks"%>
+

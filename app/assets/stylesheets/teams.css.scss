@@ -1,0 +1,46 @@
+// Place all the styles related to the Teams controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/.title {
+  
+//$headingfont: 'sertigregular';
+$bodytext: #303a3b;
+$mainblue: #228b98;
+
+  
+//.title {  
+//  color: $mainblue;
+//  font-family: $headingfont;
+//  font-size: 20px;
+//  font-weight: bold;
+ // float: left;
+//}
+
+//styles promote and revoke buttons on team page
+.tableButton {
+  margin: auto;
+}
+
+.team_name {
+  font-size: 1.125em;
+  font-family: $bodytext;
+  color: $mainblue;
+  font-weight: normal;
+  padding: 0px;
+  margin: 5px 0px 30px 20px;
+  line-height: 20px;
+}
+
+//styles team content when no teams exist
+.teamContent {
+  margin-top: 10px;
+}
+
+//positions the create team button
+#teamButton {
+  margin-top: 20px;
+}
+
+//positions add member button in teams area.
+#addMember {
+  margin-right: 8px;
+}

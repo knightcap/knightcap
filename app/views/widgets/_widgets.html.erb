@@ -1,0 +1,14 @@
+<!-- 
+	display of an individual widget
+-->
+
+<% current_user.settings(:widgets).list.each do |widget| %>
+
+<div class="widgetServiceBox">
+		<p class="pull-left widgetTitle"><%= widget.name %>: <span><%= widget.step %></span></p>
+		<p class="widgetContent"><%= displayWidget(widget)%></p>
+		<div class="clear"></div>
+</div><!-- end servicBox -->
+<div class="widgetServiceName"></div>
+<br />
+<% end %>

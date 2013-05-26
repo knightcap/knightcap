@@ -1,0 +1,41 @@
+<!-- 
+	Word Chart display
+-->
+
+<h2> Words Count Chart </h2>
+
+
+<div class="row-fluid span12 chart" id="wordChart">
+	<p id="words" style="width: inherit; height: 400px"></p>
+</div>
+
+
+<script>
+var word_list = [
+	<% 
+		i = 0
+		words.each do |k,v|
+	    i+=1	
+    %>
+    {text: "<%=k%>", weight: <%=v%>}<% if i < words.size %>,<% end%> 
+    <% end %>
+   // ...other words
+];
+
+$(document).ready(function() {
+    $("#wordChart").jQCloud(word_list, { removeOverflowing: true});
+});
+
+// Resize window event. fix jqcloud
+$(window).resize(function() {
+	
+	$("#wordChart").html("");
+    $("#wordChart").jQCloud(word_list, { 
+    	removeOverflowing: true,
+    	afterCloudRender: function() { 
+    		//$("#wordChart").html("");
+    		}
+    	});
+});
+
+</script>

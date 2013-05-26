@@ -1,0 +1,50 @@
+<!-- 
+	user can change their password after forgetting it
+	page is accessible via email link
+-->
+
+<h1 id="loginLogo">:knightcap</h1> 
+<!-- displays notifications pertaining to change of password -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div><!-- END notifications -->
+  		
+<div class="row-fluid">
+	<div class="span4 offset4 formBox" id="fPasswordForm">
+		<h2>Forgot your password?</h2>		
+		<h3>Instructions to reset your password will be sent to your email.</h3>
+		
+		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+		<% if resource.errors.any? %>
+			<div class="alert alert-error error_explanation">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<h4><%= pluralize(resource.errors.count, "error") %> prohibited your request being sent:</h4>
+				<ul>
+					<% resource.errors.full_messages.each do |msg| %>
+						<li><%= msg %></li>
+					<% end %>
+				</ul>
+			</div> <!-- END alert alert-error -->
+		<% end %>
+		  
+		  <!-- user email entry field -->
+		  <%= f.email_field :email, :placeholder => "enter your email" %>
+		
+		  <%= f.submit "reset password", :class => "red-button pull-right" %>
+		  <div class="clear"></div>
+	
+		<% end %>
+		<div class="clear"></div>
+	</div><!--END fBox, span4 -->
+	<div class="span4"></div>
+</div><!--END row-fluid -->

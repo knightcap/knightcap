@@ -1,0 +1,76 @@
+<%= stylesheet_link_tag    "application", :media => "all" %>
+
+<!-- 
+	provides the widget settings for the settings page
+-->
+
+<!-- pop up settings for each widget -->
+<div id="swap" class="modal hide fade in" style="display: none; ">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3 style="color: transparent;">Exchange Login</h3>
+	</div> <!-- END modal-header -->
+	<div class="modal-body">
+		<h2>Edit Widget</h2>
+		<h3>Choose the type of widget and result frequency.</h3>
+		<p>Change to:</p><%= select("widgets","widgets", options_for_select(Widget.list))%><br>
+		<p>View by:</p><%= select("date","step", options_for_select(["Daily","Weekly","Monthly","Yearly"]),{}, {:style=>'width:90px'})%>
+		<div class="clear"></div>
+		<button class="red-button pull-right" id="confirmSwapWidget">confirm</button>
+	</div> <!-- END modal-body -->
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+	</div> <!-- END modal-footer -->
+</div> <!-- END modal hide fade in -->
+
+<h2> Widget Settings</h2>
+<h3>You can choose 3 widget types to include on your profile.</h3>
+
+<!-- table of widgets chosen -->
+<table>
+	<tr>
+		<th class="truncate">Widget name</th>
+		<th class="truncate">Description</th>
+		<th class="truncate">Widget Display Info</th>
+		<th class="truncate pull-right">Edit</th>
+	</tr>
+	<% count = 0
+	current_user.settings(:widgets).list.each do |widget|%>
+	<tr>
+		<td id = '<%= "widgets"+count.to_s%>' class="truncate"><%= widget.name%></td>
+		<td class="truncate"><%= widget.description %></td>
+		<td id = '<%= "widgetstep"+count.to_s%>' class="truncate"><%= widget.step %></td>
+		<td class="truncate"><a id = "<%= "swap"+count.to_s%>"data-toggle="modal" href="#swap" class="icon pull-right btnSwap"><i class="icon-edit"></i></a></td>
+	</tr>
+	<% 
+	count += 1
+	end %>
+</table> <!-- END widgets table -->
+
+
+<script>
+var swapSource = -1;
+
+	$(".btnSwap").click(function() {
+		swapSource = this.id.substr(4);	
+		$("#widgets_widgets").val($("#widgets"+swapSource).html())
+		$("#date_step").val($("#widgetstep"+swapSource).html())
+	});
+	
+	$("#confirmSwapWidget").click(function(){
+		$.ajax({
+	  			type: 'GET',
+	  			url: "/settings/swap", 
+		  		data: {
+		  			index: swapSource,
+		  			name: $("#widgets_widgets").val(),
+		  			step: $("#date_step").val()
+	  			},
+	  			dataType: "html",
+	  			success: function(data, status, xhr) {
+	  				$("#settingsWidget").html(data);
+	  			}
+	  		});
+		$("#swap").modal('hide');
+	});
+	</script>

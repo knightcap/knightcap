@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SuncorpNpsApp</title>
+    <!--[if gte IE 9]>
+  <style type="text/css">.gradient {filter: none;}</style>
+  <![endif]-->
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/assets/html5shiv.js"></script>
+    <![endif]-->
+  
+  <%= stylesheet_link_tag  "application", :media => "screen" %>
+  <%= javascript_include_tag "application"%>
+  <%= csrf_meta_tags %>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+ <link href="/assets/pdf.css" media="print" rel="stylesheet" type="text/css" />
+
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+</head>
+
+<body>
+	<div id="stickyWrap"> <!-- ensures that the footer remains in place at the bottom of the browswer -->	
+		<% if user_signed_in? %> <!-- determines view based on whether the user is signed in or not -->
+			<div class="navbar navbar-inverse navbar-static-top">
+		      <div class="navbar-inner">
+		        <div class="container">
+		          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".collapse1"> <!-- creates button for collapsed navigation in smaller resolutions -->
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </button>
+		          <%= link_to ":knightcap", services_path, :class => "brand" %> <!-- creates a logo that links to the home screen -->
+		          <div class="nav-collapse collapse collapse1">
+			        <div class="header-right">
+						<nav> <!-- main navigation in header -->
+							<ul class="nav nav-pills"> 
+								<li <%if params[:controller] == "services" || params[:controller]  == "surveys" %>class="active" <%end%>>
+								<%= link_to "services", services_path %></li>
+
+								<li <%if params[:controller] == "teams"%>class="active" <%end%>><%= link_to "teams", teams_path %></li>
+								<li <%if params[:controller] == "settings" || params[:controller] == "users/registrations"%>class="active" <%end%>><%= link_to "settings", settings_path %></li>
+							</ul>
+						</nav> <!-- END navigation -->
+
+						<div class="signinfo"> <!-- contains user session information and links -->
+							 <span id="username"><%= link_to current_user.email, :profile, :class => "link" %></span><span id="signinfo-divider"> | </span><%= link_to 'log out', destroy_user_session_path,  :method => :delete,  :html => {:class => 'signout'}, :class => "link" %>
+							<button class="fullscreenbtn" title="fullscreen"></button> <!-- full screen button -->
+						</div><!--END signinfo-->
+						<div class="clear"></div>
+					</div><!--END header-right-->
+		          </div><!--/.nav-collapse -->
+		        </div> <!-- END container -->
+		      </div> <!-- END navbar-inner -->
+		    </div> <!-- END navbar navbar-inverse -->
+		<% end %>
+
+		<!-- contains invidual page content -->
+		<div class="container">	
+			<div class="row-fluid">
+				<div class="span12">
+					<%= yield %> <!-- inserts content for individual page -->
+				</div> <!-- END span12 -->
+			</div>  <!--end row-fluid-->
+		</div> <!--end container-->
+
+		<div id="push"></div> <!-- Used for pushing page content down when necessary for sticky footer -->
+	</div> <!-- End of stickyWrap -->
+
+	<!-- application footer -->
+	<footer id="footer">	
+		<div class="container">
+			<div class="row-fluid">
+				<div class="span12">
+					<!-- displays main navigation and full in footer, if user is logged in -->
+					<% if user_signed_in? %>				
+						<ul class="nav nav-pills footer-pills"> <!-- includes main navigation in footer -->
+							<li <%if params[:controller] == "services" || params[:controller]  == "surveys" %>class="active" <%end%>>
+							<%= link_to "services", services_path %></li>
+							<li <%if params[:controller] == "teams"%>class="active" <%end%>><%= link_to "teams", teams_path %></li>
+							<li <%if params[:controller] == "settings"%>class="active" <%end%>><%= link_to "settings", settings_path %></li>
+							<li><button class="fullscreenbtn" title="fullscreen"></button></li>
+						</ul> <!-- END navigation list -->
+					<% end %>
+					<div class="footertext">
+						<p>:knightcap 1.0.0 | Programmers of the Round Table</p>
+					</div> <!-- END footertext -->
+				</div><!--END span12-->
+			</div><!--ENd row-fluid-->
+		</div><!--END container-->
+	</footer> <!-- END footer -->
+
+	<!-- implements full-screen view -->
+	<script>
+	
+		var knight = {
+			nonFullscreenHeight : $(window).height()
+		}
+		
+		function bindFullscreen() {
+			var prefixes = ["", "moz", "webkit"];
+			for (var prefix in prefixes) {
+				document.addEventListener(prefixes[prefix] + "fullscreenchange", fixWidgetAreaHeight, false);
+			}
+		}
+	
+		bindFullscreen();
+		
+		
+		function isFullscreen() {
+			var prefixes = ["moz", "webkitIs"];
+			for (var prefix in prefixes) {
+				if (document[prefixes[prefix] + "FullScreen"] !== undefined) {
+					return document[prefixes[prefix] + "FullScreen"];
+				}
+			}
+			return document.fullscreen;
+		}
+		// Fix for body height issues when content is longer than viewport.
+		// Bound to window resize event - (this may cause performance issues, but only if abused).	
+		function fixBodyHeight() {
+			if ($('body').height() <= 760 ) {
+				$("body").css("height", "auto");
+			} else {
+				$("body").css("height", "100%");
+			}
+		}
+		
+		// Fix for widget area height issues on larger displays.
+		function fixWidgetAreaHeight() {
+			if ($(".widgetArea").length > 0) {
+				var amendedHeight = knight.nonFullscreenHeight - 128 - 102;
+				if ( amendedHeight > $(".widgetArea").height() ) {
+					$(".widgetArea").height(amendedHeight);
+				}
+			}
+		}
+		
+		
+		// fullscreen, Find the right method, call on correct element
+		function launchFullScreen(element) {
+		  if(element.requestFullScreen) {
+		    element.requestFullScreen();
+		  } else if(element.mozRequestFullScreen) {
+		    element.mozRequestFullScreen();
+		  } else if(element.webkitRequestFullScreen) {
+		    element.webkitRequestFullScreen();
+		  }
+		}
+		
+		// cancel fullscreen
+		function cancelFullscreen() {
+		  if(document.cancelFullScreen) {
+		    document.cancelFullScreen();
+		  } else if(document.mozCancelFullScreen) {
+		    document.mozCancelFullScreen();
+		  } else if(document.webkitCancelFullScreen) {
+		    document.webkitCancelFullScreen();
+		  }
+		}
+		
+		function fixheights() {
+			fixBodyHeight();
+			fixWidgetAreaHeight();
+		}
+		
+		// Resize window event. fix body height and widgetArea (if applicable)
+		$(window).resize( $.debounce(10, fixheights) );
+		
+		// load/cancel fullscreen on button press
+		$(".fullscreenbtn").click(function() {
+			var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+			if (!fullscreenElement) {
+				launchFullScreen(document.documentElement); // Whole application version.
+				//launchFullScreen($(".serviceArea")[0]); // Just the services
+			} else {
+				cancelFullscreen();
+			}
+		});
+	</script>
+</body>
+</html>
+

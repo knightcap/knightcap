@@ -1,0 +1,15 @@
+<!-- 
+	contains the body of the email sent when a new user is created by an admin user
+-->
+
+<p>Hello <%= @email %>,</p>
+<p>Welcome to Knightcap</p>
+<br>
+<p>A Knightcap account has been created for you.</p>
+<p>Your username is <%= @email %>, and your password is <%= @password %>.</p> <!-- includes default username and password -->
+<br>
+<p>To access the site, please login at <a href="<%= @url.html_safe %>"><%= @url.html_safe %></a>.</p>
+<p>Once logged in, you can change your password by navigating to your user profile in the settings area.</p>
+<br>
+<p>Regards,</p>
+<p>The Knightcap Team</p>

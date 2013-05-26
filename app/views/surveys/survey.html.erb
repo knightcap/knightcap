@@ -1,0 +1,97 @@
+<!-- 
+	survey that is sent to users via email
+-->
+
+<%= stylesheet_link_tag    "application", :media => "all" %> <!-- adds styling to the survey page, as page is external to the main application -->
+<%= javascript_include_tag "jquery"%>
+
+<div id="stickyWrap"> <!--  -->
+	<div class="container">			
+		<div class="row-fluid span12">
+			<h1>Survey for <%= @service.name %></h1>
+	
+			<!-- displays alerts related to completion of the survey -->			
+			<div class="notifications">
+				<% if flash[:alert].present? %>
+					<div class="alert alert-error">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= alert %>
+					</div>
+				<% elsif flash[:notice].present? %>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= notice %>
+					</div>
+				<% end %>
+			</div>
+	
+			<!-- displays a 'survey completed' message if the survey connected to the unique URL has already been submitted by the user -->
+			<% if @result.first.done == true %>
+				<div class="row-fluid">
+					<div class="span8 offset2 contentBox">
+						<p>You have already completed this survey.</p>
+					</div> <!-- END span8 contentBox -->
+					<div class="span2"></div> <!-- empty span to keep message positioned correctly -->
+				</div> <!-- END row-fluid -->
+				
+			<!-- if the survey has not already been submitted by the user, the survey is displayed -->	
+			<% else %>
+				<div class="row-fluid">
+					<div class="span8 offset2 contentBox">
+						
+						<%= form_tag "thankyou" do %>
+						<h2>Score:</h2>
+						<h3>How likely are you to recommend this survey?</h3>
+						<div class="nps"> 
+							<!-- list of radio buttons for nps scores -->
+							<ul>
+								<% for i in 0..10 do %>
+									<li class="surveyScore pull-left"><%= radio_button_tag(:score, i) %> <%= i %></li>
+								<% end %>
+							</ul>
+						</div> <!-- END nps -->
+						<div class="clear"></div>
+						
+						<!-- text area for users to provide comments on the service -->
+						<h2> Comments: </h2>
+						<h3>Please explain why you gave this score.</h3>
+							<%= text_area(:comments, :box, :cols => 60, :rows => 10) %> <br><br>
+							<%= hidden_field_tag 'a', params[:a]%>
+							<%= hidden_field_tag 'b', params[:b]%>
+							<%= button_tag "submit", :class => 'red-button pull-right'%>
+						<div class="clear"></div>
+						<% end %>
+						
+					</div> <!-- END span8 contentBox -->
+					<div class="span2"></div> <!-- empty span to keep survey positioned correctly-->
+				</div> <!-- END row-fluid -->
+			<% end %>	
+		</div> <!-- END row-fluid span12 -->
+	</div> <!-- END container -->
+	
+	<div id="push"></div> <!-- Used for pushing page content down when necessary for sticky footer -->
+	
+</div> <!-- End of stickyWrap -->
+
+<!-- displays footer containing only footer text -->
+<footer>	
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="footertext">
+					<p>:knightcap In-Dev 0.5.5 | Programmers of the Round Table</p>
+				</div> <!-- END footertext -->
+			</div> <!--END span12-->
+		</div> <!--ENd row-fluid-->
+	</div> <!--END container-->
+</footer> <!-- END footer -->
+
+<script>
+	// temp fix for body height
+	if ( $('body').height() <= 760 ) {
+		$("body").css("height", "auto");
+	} else {
+		$("body").css("height", "100%");
+	}
+</script>
+	

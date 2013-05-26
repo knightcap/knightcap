@@ -1,0 +1,45 @@
+<!--  
+	registrations area
+	NOT CURRENTLY USED IN APPLICATION, as registrations view has been merged with log in view - sessions/new.html
+-->
+
+<div class="login_forms" align="center">
+    <p class="notice" data-dismiss="alert"><%= notice %></p>
+    <p class="alert" data-dismiss="alert"><%= alert %></p>
+
+	<div class"error_message">
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+ 		<%= @a %>
+	</div> <!-- END error_message -->
+ 	
+	<div class= "register">
+		<div class="sign">
+			
+			<h2>Register</h2>
+		
+			  <div title="enter a valid email address">
+			  	<%= f.email_field :email, :placeholder => "email" %>
+			  </div>
+			
+			  <div title="choose a password (minimum 6 characters)">
+			  	<%= f.password_field :password, :placeholder => "password"%>
+			  </div>
+			
+			  <div title="confirm your password">
+			  	<%= f.password_field :password_confirmation, :placeholder => "confirm password" %>
+			  </div>
+			
+			  <div class= "login">
+			  	<button class="button" type="submit"><%= "register" %></button>
+			  </div>
+		
+		<% end %>
+		
+		</div> <!-- END sign -->
+	</div> <!-- END register -->
+
+
+</div><!--END login_forms-->
+    
+    <div class= "bottomLinks"><%= link_to 'Back', services_path %></div> 
+

@@ -1,0 +1,86 @@
+<div class="row-fluid">
+	<div class="span12 globalBlist">
+	
+		<h1>Global Black List</h1>
+
+			<div class="notifications" id="emptyServiceNote">
+				<% if flash[:alert].present? %>
+					<div class="alert alert-error">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= alert %>
+					</div>  <!-- END alert-error -->
+				<% elsif flash[:notice].present? %>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= notice %>
+					</div>  <!-- END alert-success -->
+				<% end %>
+			</div>  <!-- END notifications -->
+
+		
+		<div class="row-fluid">
+			<div class="span8 contentBox listBox">	
+				<h2>Add Email</h2>
+				<h3>Manually enter email addresses to the Global Black List.</h3>	
+				
+						<%= form_tag :gb_add do %>
+						  <%= text_field_tag(:email) %>
+						  <%= submit_tag("add", :class => "red-button pull-right") %>
+						  <div class="clear"></div>
+						<% end %>
+			</div> <!-- END span6 -->
+		
+		
+			<div class="span4 contentBox listBox">	
+				<h2>Import Email List</h2>
+				<h3>Import email lists to the Global Black List from 'comma separated' CSV files.</h3>		
+						<%= form_tag({:action => :gblistAddCsv}, :multipart => true) do %>
+						<%= file_field_tag 'csvfile', :class => "pull-right" %>
+						<div class="clear"></div>
+						 <%= submit_tag("upload", :class => "red-button pull-right button-up") %>
+						<div class="clear"></div>
+						<% end %>
+			</div> <!-- END span6 -->
+		</div> <!-- END row-fluid -->
+		
+		<!-- table of globally black listed emails -->		
+		<div class="row-fluid">
+			<div class="span12 contentBox emailList">
+				<% if @gblist.present? %>
+					<h2>Black List</h2>
+					<h3>All emails that are Black List throughout all teams.</h3>
+					<table id="gblist_table">
+					  <tr>
+					    <th class="truncate">Emails</th>
+				    	<th class="pull-right truncate"> Remove </th>
+					  </tr>
+					  
+					  <% i = 0 %>
+					<% @gblist.each do |entry| %>
+					  <tr>
+					    <td class="truncate"><%= entry.email%></td>
+					    <td>
+						<%= link_to raw("<i class='icon-remove'></i>"), {:controller => "settings", :action => "gblistRemove", :email => entry.email}, {:id =>"rmbtn_" + i.to_s, :class => 'icon pull-right'}   %>
+					    </td>
+					  </tr>
+                                        <% i+= 1%>
+					<% end %>
+					</table>
+				<% else %>
+				<p>The global blacklist is empty.</p>
+				<% end %>
+		</div> <!-- END span12 contentBox -->
+		</div> <!-- END row-fluid -->
+	<div class="bottomLinks pull-right">
+		<%= link_to 'Back', settings_path %>
+	</div> <!--END bottomLinks-->
+	
+	</div> <!-- END span12 globalBlist -->
+</div> <!-- END row-fluid -->
+
+
+<style>
+	body {
+		height: auto;
+	}
+</style>

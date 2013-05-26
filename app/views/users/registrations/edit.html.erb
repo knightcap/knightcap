@@ -1,0 +1,78 @@
+<!--  
+	user profile settings
+-->
+
+<h1>User Profile (<%= current_user.email %>)</h1>
+
+<!-- displays notifications pertaining to updating account details-->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div><!-- END notifications -->
+
+		
+<div class="row-fluid" id="fPasswordForm">
+	<!-- edit account details -->
+	<div class="span6 profileBox">
+		<h2>Change Account Details</h2>
+		
+		<h3>You can edit your email and password here.</h3>
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+		
+			<!-- email entry field, mandatory field -->
+			<%= f.label :email, :class => "pull-left" %><span  class="requirements asterix">*</span>
+			<%= f.email_field :email %>
+			
+			<!-- current password field, mandatory field -->
+			<%= f.label :current_password, :class => "pull-left" %><span class="requirements asterix">*</span>
+			<%= f.password_field :current_password, :placeholder => "enter your current password" %>
+			
+			<!-- new password field -->  
+			<%= f.label :password %>
+			<%= f.password_field :password, :autocomplete => "off", :placeholder => "enter a new password"%>
+			
+			<!-- new password confirmation field -->
+			<%= f.label :password_confirmation %>
+			<%= f.password_field :password_confirmation, :placeholder => "confirm your new password" %>
+		
+			<p class="requirements">Fields marked with an asterix(*) must be completed.</p>
+			<%= f.submit "update", :class => 'red-button pull-right' %>
+		<% end %>
+		<div class="clear"></div>
+	</div> <!-- END span6 profileBox -->
+
+	<!-- delete user account -->
+	<div class="span6 profileBox">
+		<h2>Cancel my account</h2>
+		<h3>Unhappy? You can use the link below to cancel your account with Knightcap.</h3>
+
+			<div id="sadface">
+				<img src="/assets/sadface.png" alt="sadface emoticon">
+			</div>
+			<p id="sadMessage">We'll be sad to see you go.</p>
+			<%= link_to "cancel account", registration_path(resource_name), :data => { :confirm => "Are you sure you want to cancel your account?" }, :method => :delete, :class => 'red-button pull-right' %>
+
+		<div class="clear"></div>
+	</div> <!-- END span6 profileBox -->
+
+</div> <!-- END row-fluid -->
+
+<%= link_to "Back", :back, :class => "bottomLinks pull-right"%>
+
+<script>
+	// temp fix for body height
+	if ($('body').height() <= 760 ) {
+		$("body").css("height", "auto");
+	} else {
+		$("body").css("height", "100%");
+	}
+</script>

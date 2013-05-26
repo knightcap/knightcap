@@ -1,0 +1,356 @@
+// Place all the styles related to the surveys controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$widgetbgc: #e4e3d5;
+$ds: #666;
+$mainblue: #228b98;
+$darkblue: #476569;
+$shadow: #434849;
+$footerc:#303a3b;
+$roundedpx: 3px;
+$linkc:#476569;
+$red: #ae4729;
+$hoverred: #bc4b2a;
+$bodytext: #303a3b;
+
+// widget styling
+.widgetArea {
+  background-color: $widgetbgc;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.widgetServiceBox {
+  background-color: #fff;
+  width: 100%;
+  height:138px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position: relative;
+  
+  -moz-box-shadow:  0px 1px 1px $ds;
+  -webkit-box-shadow:  0px 1px 1px $ds;
+  box-shadow:  0px 1px 1px $ds;
+}
+
+.widgetTitle{
+  font-family: 'Droid Sans';
+  float: left;
+  line-height: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background: #F4F4F4;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.widgetTitle span {
+    color: $mainblue; 
+}
+.widgetContent {
+  font-family: 'Droid Sans';
+  font-size: 2.5em;
+  padding: 20px 0px;
+  clear: both;
+  
+  text-align: center;
+}
+
+//contentBox styling for service show page
+.serviceContent {
+    background: white;
+    padding: 35px 30px 30px 30px;
+    height: 300px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+    margin: 2px 0px 30px 0px;
+    -moz-box-shadow: 0px 1px 1px $ds;
+    -webkit-box-shadow: 0px 1px 1px $ds;
+    box-shadow: 0px 1px 1px $ds;
+    
+    a:focus {
+      color: #fff;
+      text-decoration: none;
+    }
+}
+
+//ews styling
+.modal-header {
+  background: whiteSmoke;
+}
+
+.modal-body select {
+  margin-left: 30px;
+}
+
+#date_step {
+  width: 80px;
+}
+
+#widgets_widgets {
+  width: 115px;
+}
+
+//Service Box settings for services page
+.serviceBox {
+  background: #fff;
+  padding: 0px;
+  height: 148px;
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow: 0px 1px 1px 0px $ds;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.serviceLink {
+  margin-left: 0px;
+  margin-bottom: 0px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position:absolute;
+  padding: 20px;
+}
+
+a.serviceLink{
+  display: block;
+  height: 148px;
+  width: 100%;
+}
+
+a.serviceLink:hover{
+  background:#F4F4F4;
+}
+
+.serviceScore {
+  font-family: 'sertigregular';
+  font-size: 4.6875em;
+  position: absolute;
+  left: 20px;
+  bottom: 40px;
+}
+
+a.noLink {
+  color: $bodytext !important;
+}
+
+a.noLink:hover {
+  text-decoration: none;
+}
+
+.serviceTrend {
+  position: absolute;
+  left: 170px;
+  height: 57px;
+  width:57px;
+  background-image: url('trendarrow.png');
+  bottom: 40px;
+  
+}
+
+
+//styles headings in service section
+.serviceName {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.service {
+  margin-bottom: 10px; 
+  display:block;
+}
+
+.teamName {
+   margin-left: 10px; 
+   margin-bottom: 20px;
+}
+
+//styling for new and edit service forms
+#serviceForm {
+  margin-top: -5px;
+}
+
+#serviceButton {
+  margin-top: 20px;
+}
+
+//styles service page when no services exist
+#emptyServices {
+  margin: 40px 0px;
+  
+  a {color: $mainblue;}
+  a:visited {color: $mainblue;}
+  a:hover {color: $darkblue;}
+}
+
+#emptyServiceNote {
+  margin-top: 40px;
+}
+
+/**** the sub-menu within the services area ****/
+.serviceLinks {
+  margin-top: 0px;
+}
+
+.create {
+  margin-top: 35px;
+  margin-bottom: 10px;
+}
+
+// Parent container for inner nav
+div.header-right2 {
+  float: right;
+  padding-top: 5px;
+  margin-bottom: 20px;
+  margin-top: -100px;
+}
+
+// Button for collapsed nav
+.serviceLinks .navbar-inverse .btn-navbar {
+  background-color: $mainblue;
+  background-image: none;
+  margin-right: 15px;
+  margin-top: -90px;
+}
+
+.serviceLinks .navbar-inverse .btn-navbar:hover {
+  background-color: $footerc;
+  background-image: none; 
+}
+
+.serviceLinks .navbar-inverse btn-navbar:focus {
+  outline: thin dotted;
+  background: $mainblue ;
+  text-decoration: none;
+}
+
+.serviceLinks .navbar-inverse nav {
+  float: left;
+  
+  ul.nav-pills li a {
+    -webkit-border-radius: $roundedpx;
+    border-radius: $roundedpx;
+    font-weight: 700;
+    color: $linkc;
+    font-size: 0.9375em;
+    text-shadow: none;
+    padding: 8px 12px;
+  }
+  
+  ul.nav-pills li a:hover {
+    background: transparent;
+    color: $footerc;
+  }
+  
+  ul.nav-pills li a:active {
+    background: transparent;
+    color: $mainblue;
+  }
+  
+  ul.nav-pills li a:focus {
+    outline: thin dotted;
+    color: $linkc;
+    text-decoration: none;
+    background-color: transparent !important;  
+  }
+  
+  ul.nav-pills li.active a {
+    background: $red;
+    text-shadow: 0px -1px 1px $shadow;
+    filter: dropshadow(color=$shadow, offx=0, offy=-1);
+    color: #fff;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  
+  ul.nav-pills li.active a:hover {
+    background: $hoverred;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  
+  ul.nav-pills li.active a:focus {
+    outline: thin dotted;
+    color: #fff;
+    background: $red !important ;
+    text-decoration: none;
+  }
+  
+}
+
+/**** responsive styles ****/
+@media (max-width: 1220px) {
+   .serviceScore {
+    font-size: 3.75em;
+    bottom: 50px;
+  }
+  
+  .serviceTrend {
+    left: 140px;
+    bottom: 40px;
+  }
+}
+
+@media (max-width: 979px) { 
+
+  .serviceTrend {
+    display: none;
+  }
+  .button {
+    margin-top: 20px;
+  }
+  
+  #widgetContent {
+    font-size: 1.75em;
+  }
+  
+  .collapse2 {
+  float: left;
+  margin-left: 20px;
+  }
+
+  div.header-right2 {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  .serviceTrend {
+    display: block;
+  }
+ 
+  .widgetContent {
+    font-size: 2.5em;
+  }
+  
+  .serviceContent {
+    height: auto;
+  }
+  
+  .create {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .serviceLinks .navbar-inverse .btn-navbar {
+    margin-top: -70px;
+  }
+  
+}
+
+@media (max-width: 288px) {
+  .navbar-inner a.brand {
+    margin-top: 3px;
+    font-size: 2.1875em;
+  }
+}

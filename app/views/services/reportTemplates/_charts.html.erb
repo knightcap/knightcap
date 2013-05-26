@@ -1,0 +1,103 @@
+<!-- 
+	contains the content required to update and display charts on the analyse page
+-->
+
+<div id = "reportCharts">
+	
+	<!-- ensures that charts are only displayed if enough survey responses have been received -->
+	<% if count_responses(@date["start"], @date["end"]) > 0 %>
+	<% 
+	 response = get_nps_response(@date["start"], @date["end"], @date["step"])
+	  pdn = get_pdn_values(@date["start"], @date["end"])
+	 words = get_words_used(@date["start"], @date["end"])
+	%>
+		
+	<div class="row-fluid">
+		<!-- parameters for displaying the results of surveys -->
+		<div class="span4 contentBox reportBox upperReports">
+			<h2>Analysis Period</h2>
+			<h3>Select the date range and display type for your survey analysis.</h3>
+				<%= form_tag do %>
+					<p>From: <p class="date"><%= date_select("start","start", :order => [:day, :month, :year], :default => @date["start"])%> </p></p>
+					<p>To: <p class="date"><%= date_select("end", "end", :order => [:day, :month, :year], :default => @date["end"])%></p></p>
+					<p>Display results in: <p class="date"><%= select("step", "step", options_for_select([ "Days", "Weeks", "Months", "Years" ], @date["step"]))%></p></p>
+				<% end %>
+			
+			<%= link_to "generate pdf report", { :controller => "services", :action => "print", :id => @service,:post=>@date,:format=>"pdf" }, {:class => "red-button pull-right", :target => "_blank"}  %>
+			<div class="clear"></div>
+		</div> <!-- END span4 contentBox -->
+		
+		<div class="span8 contentBox reportBox upperReports">
+			<!-- displays Response Chart -->
+			<%= render :partial => 'services/reportTemplates/response', :locals => {:response => response }%>
+		</div> <!-- END span8 contentBox -->
+	
+	</div> <!-- END row-fluid -->
+	
+	<div class="row-fluid">
+		<div class="span4 contentBox reportBox lowerReports">
+			<!-- displays PDN Chart -->
+			<%= render :partial => 'services/reportTemplates/pdn', :locals => {:pdn => pdn} %>
+		</div> <!-- END span4 contentBox -->
+		<div class="span8 contentBox reportBox lowerReports">
+			<!-- displays Word Chart -->
+			<%= render :partial => 'services/reportTemplates/words', :locals => {:words => words } %>
+		</div> <!-- END span8 contentBox -->
+	</div> <!-- END row-fluid -->
+		
+	<% else %>
+	<!-- informs users that the application is unable to display charts -->
+	<div class="row-fluid">
+		<div class="span4 contentBox reportBox upperReports">
+			<h2>Analysis Period</h2>
+			<h3>Select the date range and display type for your survey analysis.</h3>
+				<%= form_tag do %>
+					<p>From: <p class="date"><%= date_select("start","start", :order => [:day, :month, :year], :default => @date["start"])%> </p></p>
+					<p>To: <p class="date"><%= date_select("end", "end", :order => [:day, :month, :year], :default => @date["end"])%></p></p>
+					<p>Display results in: <p class="date"><%= select("step", "step", options_for_select([ "Days", "Weeks", "Months", "Years" ], @date["step"]))%></p></p>
+				<% end %>
+			
+			<%= link_to "generate .pdf report", { :controller => "services", :action => "print", :id => @service,:post=>@date,:format=>"pdf" }, {:class => "red-button pull-right", :target => "_blank"}  %>
+			<div class="clear"></div>
+		</div>
+		
+		<div class= "span8">	
+			<div class="contentBox">
+				<p>There are too few results received in the selected period to process the report.</p>
+			</div> <!-- END contentBox -->
+		</div> <!-- END span8 -->
+	</div> <!-- END row-fluid -->
+	
+	<% end %>
+</div> <!-- END reportCharts -->
+
+
+<script>
+	$("#start_start_3i").change( function() { handleChange(this); } );
+	$("#start_start_2i").change( function() { handleChange(this); });
+	$("#start_start_1i").change( function() { handleChange(this); });
+	$("#end_end_3i").change( function() { handleChange(this); });
+	$("#end_end_2i").change( function() { handleChange(this); });
+	$("#end_end_1i").change( function() { handleChange(this); });
+	$("#step_step").change( function() { handleChange(this); });
+	
+	
+	function handleChange(date) {
+		
+		var getUrl = "?";
+		getUrl += "sday=" + $("#start_start_3i").val();
+		getUrl += "&smth=" + $("#start_start_2i").val();
+		getUrl += "&syr=" + $("#start_start_1i").val();
+		getUrl += "&eday=" + $("#end_end_3i").val();
+		getUrl += "&emth=" + $("#end_end_2i").val();
+		getUrl += "&eyr=" + $("#end_end_1i").val();
+		getUrl += "&step=" + $("#step_step").val();
+		
+		$.ajax({
+		type: "GET",
+		url: "reportSubmit" + getUrl,
+		success: function(data){
+			
+			$("#reportAll").html(data);
+	}});}
+</script>

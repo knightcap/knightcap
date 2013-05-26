@@ -1,0 +1,51 @@
+<!-- main page for settings; will display user account settings and any settings relevent to the users privilege level -->
+<h1>User Settings</h1>
+
+<!-- displays any notifications pertinent to settings -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div> <!-- END alert alert-success -->
+	<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div> <!-- END notifications -->
+
+
+<!-- content box of all settings -->		
+<div class="contentBox">
+	<div id="userSettings">
+		<h2>User Profile</h2>
+		<h3>You can edit the user email and password of your account.</h3>
+		<p>Account Name: </p>
+		<p id="editUserLink"><%= current_user.email %> (<a href="profile">Edit Profile</a>)</p>
+	</div> <!-- END userSettings -->
+		<!-- if user has team leader or team member privileges, displays widget settings -->
+	<% if current_user.role? :team_leader or current_user.role? :team_member %>
+		<div id="settingsWidget">
+			<%= render "widgetSettings"%>
+		</div> <!-- END settingsWidget -->
+	<% end %>
+
+		<!-- if user has site-wide, admin privileges, displays admin settings -->
+	<% if current_user.role? :admin %>
+		<div id="adminSettings">
+			<%= render "adminSettings"%>
+		</div> <!-- END adminSettings -->
+
+	<% end %>
+</div> <!-- END contentBox -->
+
+<script>
+	// temp fix for body height
+	if ($('body').height() <= 760 ) {
+		$("body").css("height", "auto");
+	} else {
+		$("body").css("height", "100%");
+	}
+</script>

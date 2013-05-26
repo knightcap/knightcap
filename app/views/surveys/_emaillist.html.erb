@@ -1,0 +1,66 @@
+<%= stylesheet_link_tag    "application", :media => "all" %>
+
+<!--
+	creates a table of emails on the survey index page if the user has provided any emails
+-->
+
+
+<% if @emails.present? %>
+	<!-- table of emails to send survey to -->
+	<table id = 'email_list'>
+		<!--empty <tr> is fix for incorrect row colours -->
+		
+		<tr>
+			<th colspan=<% if @isadmin %> 3 <% else%> 2 <% end %> class="truncate">Emails</th>
+			<% if @isadmin %><th class="truncate">Add to Black List <% end %></th>
+			<th class="truncate pull-right">Remove</th>
+		</tr>	  
+		<% i = 0 %>
+		<% @emails.each do |email| %> <!-- creates a new row for each email -->
+			<tr>
+				<td colspan=<% if @isadmin %> 3 <% else%> 2 <% end %> class="truncate"><%= email%></td>
+				<% if @isadmin %><td class="link truncate">
+					<%= link_to "Add", :controller => "surveys", :action => "blacklist", :email => email %>
+			   </td><% end %>
+			    <td>
+					<%= hidden_field_tag 'remove', email, :id => "remove"+i.to_s%>
+					<%= link_to raw("<i class='icon-remove'></i>"), 'javascript:;', :class => 'icon btnRemoveClass pull-right', :id=> "btnRemove" + i.to_s %>
+					<% i = i + 1 %>
+				</td>
+
+			</tr>
+		<% end %>
+	</table> <!-- end email table -->
+	
+	<%= form_tag :send_email  do %>
+	<%= submit_tag "send", :name => 'send', :class => 'red-button pull-right'%> <!-- button to send surveys to listed emails -->
+	<div class="clear"></div>
+<% end %>
+
+<!-- If no emails have been provided, a prompt is provided -->
+<% else %>
+	<p>Please enter any email addresses you wish to send this survey to.</p>
+<% end %>
+
+
+
+<script>	
+	$(".btnRemoveClass").click(function() {
+		var buttonId = this.id.substr(9);
+		
+		$.ajax ({
+			type: "GET",
+			url: "<%= "/services/" + params[:id] + "/survey/remove" %>",
+			data: {
+				email: $("#remove" + buttonId).val()
+			},
+			dataType: "html",
+			success: function(data, status, xhr) {
+				$("#emailTable").html(data);
+				$("tr:odd").css("background-color", "rgb(245, 248, 248");
+			}
+		});
+	})
+	
+	
+</script>

@@ -1,0 +1,123 @@
+<!-- 
+	settings for the service, containing options for a black list and distribution list
+-->
+
+<div class="serviceHeadings">
+		<h1 class="service">Service Settings</h1>
+		<h2 class="serviceName" class="pull-left"><%=@service.name%></h2>
+	</div> <!-- END serviceHeadings -->
+	<div class="clear"></div>
+	
+	<%= render 'services/serviceLinks'%> <!-- renders the inner navigation for single service -->
+	
+	<!-- displays notifications pertaining to service settings -->
+	<div class="notifications">
+		<% if flash[:alert].present? %>
+			<div class="alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<%= alert %>
+			</div> <!-- END alert-error -->
+		<% elsif flash[:notice].present? %>
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<%= notice %>
+			</div> <!-- END alert-success -->
+		<% end %>
+	</div> <!-- END notifications -->
+
+	<div class="contentBox">
+		<h2>Email Black List</h2>
+		<h3>Emails that can not be included in the send list. Emails can be added manually or by importing a 'comma separated' CSV file.</h3>
+		<div class="row-fluid">
+			<div class="span8">
+				<%= form_tag :b_add, :id => 'b_add' do %>
+				  <%= text_field_tag(:email) %>
+				  <%= submit_tag("add", :class => "red-button pull-right push-button") %>
+				<% end %>
+				<div class="clear"></div>
+			</div>
+     		<div class="span4">
+     			<%= form_tag({:action => :blistAddCsv}, :multipart => true, :id=>"content1") do %>
+				<%= file_field_tag 'b_csv', :class => "pull-right"%>
+				<div class="clear"></div>
+			  	<%= submit_tag("upload", :class => "red-button pull-right blist-button-up") %>
+				<% end %>
+     		</div>
+		</div> <!-- END row-fluid -->
+
+		<!-- list of black listed emails for service -->	
+		<% if @blist.present? %>
+			<table id="blist_table">
+			  <tr>
+			    <th colspan=2 class = "truncate">Emails</th>
+		    <th class = "truncate pull-right"> Remove </th>
+			  </tr>
+			  <% i = 0 %>
+			<% @blist.each do |entry| %>
+			  <tr>
+			    <td colspan=2 class = "truncate"><%= entry.email%></td>
+			    <td class="listIcon pull-right">
+				<%= link_to raw("<i class='icon-remove'></i>"), {:controller => "surveys", :action => "blistRemove", :email => entry.email}, {:id =>"rmbtn_" + i.to_s, :class => 'pull-right'}  %>
+			    </td>
+			  </tr>
+			<% i+= 1%>
+			<% end %>
+			</table>
+		
+		<% else %>
+		<p>Your Black List for this service is currently empty.</p>
+		<% end %>
+	</div> <!-- END contentBox -->
+	
+	<!-- emails that are automatically included in the survey email list -->
+	<div class="contentBox">
+		<h2>Distribution List</h2>
+		<h3>Default email list for service. Emails can be added manually or by importing a 'comma separated' CSV file.</h3>
+		<div class="row-fluid">
+			<div class="span8">
+				<%= form_tag :d_add, :id => 'd_add'  do %>
+			  		<%= text_field_tag(:email) %>
+			  		<%= submit_tag("add", :class => "red-button pull-right") %>
+				<% end %>
+				<div class="clear"></div>
+			</div> <!-- END span8 -->
+     		<div class="span4">
+     			<%= form_tag({:action => :dlistAddCsv}, :multipart => true,:id=>"content2") do %>
+				<%= file_field_tag 'd_csv', :class => "pull-right" %>
+				<div class="clear"></div>
+		  		<%= submit_tag("upload", :class => "red-button pull-right dlist-button-up") %>
+				<% end %>
+     		</div> <!-- END span4 -->
+		</div> <!-- END row-fluid -->
+
+	<!-- table of default emails -->	
+	<% if @dlist.present? %>
+
+		<table id="dlist_table">
+		  <tr>
+		    <th colspan=2 class = "truncate">Emails</th>
+		    <th class = "truncate pull-right"> Remove </th>
+		  </tr>
+		  <% i = 0 %>
+		<% @dlist.each do |entry| %>
+		  <tr>
+		    <td colspan=2 class = "truncate"><%= entry.email%></td>
+		    <td class="listIcon pull-right">
+			<%= link_to raw("<i class='icon-remove'></i>"), {:controller => "surveys", :action => "dlistRemove", :email => entry.email}, {:class => "pull-right", :id => "rmbtn_"+i.to_s } %>
+		    </td>
+		  </tr>
+		  <% i = i+0 %>
+		<% end %>
+		</table>
+	
+	<% else %>
+	<p>This service currently has no emails associated with it.</p>
+	<% end %>
+	</div> <!-- END contentBox -->
+<%= render "services/servicebottomlinks"%>
+
+<style>
+	body {
+		height: auto;
+	}
+</style>

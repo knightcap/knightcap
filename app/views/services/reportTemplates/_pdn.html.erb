@@ -1,0 +1,54 @@
+<!-- 
+	PDN chart display
+-->
+
+<h2> Promoters VS Detractors VS Neutral </h2>
+<div class="row-fluid span12 chart">
+	<p id="pdnChart" class="truncate"></p>
+</div>
+
+<script>
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'pdnChart',
+            //alignTicks: false,
+            type: 'bar',
+            backgroundColor: '#ffffff'
+        },
+    colors: ['#468847', '#3a87ad', '#b94a48'],
+        title: {
+            text: ""
+        },
+        plotOptions: {
+        	series: { enableMouseTracking: false, 
+        		shadow: false, 
+        		animation: false},
+        	
+        	bar: {colorByPoint: true}
+        },
+        xAxis: {
+            categories: ['Promoters', 'Neutral', 'Detractors']
+        },
+        yAxis: {
+            title: {
+                text: 'Responses'
+            },
+            gridLineWidth: 0,
+            min:0,
+            allowDecimals: false,
+            minTickInterval: 1
+        },
+        tooltip: 
+        {
+           formatter: function() {
+                return ''+ (this.series.name) + ": " + this.y;
+            },
+        },
+        legend: {
+            enabled: false
+        },
+        series: [{
+            data: <%= pdn["pdn"] %>,
+        }]
+    });
+</script>

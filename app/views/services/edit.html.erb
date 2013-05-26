@@ -1,0 +1,16 @@
+<!-- 
+	edit service page
+-->
+
+<div class="row-fluid">
+	<div class="span4 offset4 formBox">
+		<h2>Editing Service<%=@all%></h2>
+		<h3>You can edit the name, email content and associated team of this service.</h3>
+		<%= render 'form' %>  <!-- renders the service form -->
+	</div><!--END fBox, span4 -->
+	<div class="span4"></div>
+</div><!-- END row-fluid -->
+
+<div class="bottomLinks pull-right">
+	<%= link_to 'Back', @service %> 
+</div>  <!-- END bottomLinks -->

@@ -1,0 +1,674 @@
+// Serting Webfont embeded
+@font-face {
+  font-family: 'sertigregular';
+  src: url('../fonts/sertig/sertig-webfont.eot');
+  src: url('../fonts/sertig/sertig-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/sertig/sertig-webfont.woff') format('woff'),
+  url('../fonts/sertig/sertig-webfont.ttf') format('truetype'),
+  url('../fonts/sertig/sertig-webfont.svg#sertigregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+$nonanav:#476569;
+$ds: #666;
+$headingfont: 'sertigregular';
+$red: #ae4729;
+$hoverred: #bc4b2a;
+$activered: #8d361d;
+$contentbg: #efecdf;
+$logoc: #476569;
+$bodytext: #303a3b;
+$mainblue: #228b98;
+$darkblue: #476569;
+$linkc:#476569;
+$roundedpx: 3px;
+$shadow: #434849;
+$footerc:#303a3b;
+
+//class to clear
+.clear {
+  clear: both;
+}
+
+// Some bootstrap over rides in the over rides file. Some are not working there and have to be done manually....
+
+
+
+// Bootstrap over rides
+.navbar-inverse .navbar-inner {
+	background: #fff;
+	border: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+
+// html scss
+html { 
+  height: 100%;
+}
+
+//body scss
+body {  
+	font-family: 'Droid Sans', sans-serif;
+    font-size: 100%;
+    color: $bodytext;
+    height: 100%;
+    background: url(../assets/bg.png) $contentbg;      
+}
+
+.full-height {
+	height: 100%;
+}
+
+// wrap for sticky footer
+#stickyWrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -128px;
+    clear: both;
+}
+
+p {
+	font-size: 0.9375em;
+	line-height: 24px;
+	margin-bottom: 10px;
+}
+
+h1 {
+	font-family: $headingfont;
+	color: $mainblue;
+	font-size: 2.1875em;
+	margin: 30px 0px 30px 0px;	
+}
+
+h2 {
+	font-family: $headingfont;
+	margin: 0px;
+	color: #303A3B;
+	font-size: 1.875em;
+	padding: 0px;
+	line-height: 30px;
+}
+
+h3 {
+  font-size: 0.78125em;
+  font-family: 'Droid Sans';
+  color: $mainblue;
+  font-weight: normal;
+  padding: 0px;
+  margin: 0px;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  line-height: 20px;
+}
+
+a {
+	color: $linkc;
+	text-decoration: none;
+}
+
+a:hover {
+	color: $mainblue;
+}
+
+a:active {
+	color: $footerc;
+}
+
+a:focus {
+  outline: thin dotted;
+  color: $linkc;
+  text-decoration: none;
+}
+
+//default button styling for application
+.red-button {
+  margin-top: 20px;
+	padding: 8px 12px;
+	background-color: $red;
+	font-size: 0.9375em;
+	color: #fff;
+	font-weight: bold;
+	-webkit-border-radius: $roundedpx;
+	border-radius: $roundedpx;
+	text-shadow: 0px -1px 1px $shadow;
+	filter: dropshadow(color=$shadow, offx=0, offy=-1);	
+	text-align: center;
+}
+
+.red-button:hover {
+	background-color: $hoverred;
+	text-decoration: none;
+}
+
+.red-button:active {
+	background-color: $activered;
+}
+
+button.red-button, input.red-button {
+	border: none;
+}
+
+a.red-button:hover {
+  color: #fff;
+}
+
+.red-button:focus {
+  outline: thin dotted !important;
+  background: $red;
+  color: white;
+  text-decoration: none;
+}
+
+// Div that pushes content down for sticky footer
+#push {
+	height: 128px;
+}
+
+
+//knightcap logo in header
+.navbar-inner a.brand {
+	font-family: $headingfont;
+	color: $logoc;
+	margin: 0px;
+	padding: 45px 0px 0px;
+	font-size: 2.8125em;
+	letter-spacing: 1px;
+	text-shadow: none;
+	font-weight: bold;	
+}
+
+.navbar-inner a.brand:hover {
+	color: $mainblue;
+}
+
+.navbar-inner a.brand:active {
+	color: $footerc;
+}
+
+.navbar-inner a.brand:focus {
+  outline: thin dotted;
+  color: $logoc;
+  background: white;
+}
+
+// Parent container for nav and signinfo
+div.header-right {
+	float: right;
+	padding-top: 40px;
+}
+
+
+// Button for collapsed nav
+.navbar-inverse .btn-navbar {
+	background-color: $footerc;
+	background-image: none;
+}
+
+.navbar-inverse .btn-navbar:hover {
+	background-color: $mainblue;
+	background-image: none;	
+}
+
+.navbar-inverse .btn-navbar:focus {
+  outline: thin dotted;
+  background-color: $footerc;
+  background-image: none;
+  text-decoration: none;
+}
+
+.navbar-inverse nav {
+	float: left;
+	
+	ul.nav-pills li a {
+		-webkit-border-radius: $roundedpx;
+		border-radius: $roundedpx;
+		font-weight: 700;
+		color: $linkc;
+		font-size: 0.9375em;
+		text-shadow: none;
+		padding: 8px 12px;
+	}
+	
+	ul.nav-pills li a:hover {
+		background: transparent;
+		color: $mainblue;
+	}
+	
+	ul.nav-pills li a:active {
+		background: transparent;
+		color: $footerc;
+	}
+	
+	ul.nav-pills li a:focus {
+    outline: thin dotted;
+    color: $linkc;
+    text-decoration: none;
+    background-color: #fff !important;
+  }
+	
+	ul.nav-pills li.active a {
+		background: $mainblue;
+		text-shadow: 0px -1px 1px $shadow;
+		filter: dropshadow(color=$shadow, offx=0, offy=-1);
+		color: #fff;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+	}
+	
+	ul.nav-pills li.active a:hover {
+		background-color: $mainblue;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+	}
+  
+  ul.nav-pills li.active a:focus {
+    outline: thin dotted;
+    color: #fff;
+    background: $mainblue !important  ;
+    text-decoration: none;
+  }
+}
+
+//log out area in header
+.signinfo {
+	float: right;
+	font-size: 1.09375em;
+	font-family: $headingfont;
+	margin-left: 50px;
+	
+	#signinfo-divider {
+		color: $mainblue;
+	}
+	
+}
+
+// fullscreen button styles
+button.fullscreenbtn {
+	width: 32px;
+	height: 32px;
+	border: none;
+	background: url(../assets/fscreenbtn.png) no-repeat $red;
+	background-position: 0px 0px;
+	-webkit-border-radius: $roundedpx;
+	border-radius: $roundedpx;
+	margin-left: 20px;
+}
+
+button.fullscreenbtn:hover {
+	background-color: $hoverred;
+	background-position: 0px -32px;
+}
+
+button.fullscreenbtn:active {
+	background-color: $activered;
+}
+
+button.fullscreenbtn:focus {
+  outline: thin dotted !important;
+}
+
+
+//styling for error messages and alerts
+.error_explanation {
+  h4 {
+  font-size: 0.78125em;
+  }
+
+  li {
+    font-size: 0.78125em;
+  }
+}
+
+
+/**** styles input types ****/
+input, textarea {
+  width: 97%;
+  margin-bottom: 20px;
+  margin-top: 3px; 
+  font-family: 'Droid Sans';
+  color: #303a3b;
+}
+
+input [type="submit"] {
+  margin-bottom: 5px;
+}
+
+label {
+  margin-bottom: 0px;
+}
+
+select {
+  width: 150px;
+}
+
+.field_with_errors input {
+  border-color: #b94a48;
+}
+
+input [type="submit"]:focus {
+  outline: thin dotted !important;
+}
+
+
+//pulls csv button up to sit in line with other buttons
+.button-up {
+  margin-top: 10px;
+}
+
+/**** styles text links ****/
+a {
+  color: #666;
+  text-decoration: none;
+  &:hover {
+    color: #333;
+    background-color: none;
+  }
+}
+
+//styles forms and content areas
+.contentBox {
+    background: white;
+    padding: 35px 30px 30px 30px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+    margin: 30px 0px 30px 0px;
+    -moz-box-shadow: 0px 1px 1px $ds;
+    -webkit-box-shadow: 0px 1px 1px $ds;
+    box-shadow: 0px 1px 1px $ds;
+    
+    a:focus {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+}
+ 
+.formBox {
+    clear: both;
+    background: white;
+    padding: 25px 20px 20px 20px;
+    margin: 50px auto 30px auto;
+    position: relative;
+    -moz-box-shadow: 0px 1px 1px $ds;
+    -webkit-box-shadow: 0px 1px 1px $ds;
+    box-shadow: 0px 1px 1px $ds;
+} 
+
+form {
+  margin-bottom: 0px;
+}
+
+//styles bottom of page navigation links throughout site
+
+.bottomLinks {
+  background-color: $contentbg;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.bottomLinks > li {
+  display: inline-block;
+  float: left;
+  text-decoration: none;
+  background-color: $contentbg;
+  margin-top: 3.1px;
+  font-size: 14px;
+}
+
+.bottomLinks > li > a:hover{
+  height:93px;
+  width:33px;
+  padding: 5px 5px 5px 5px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 0px;
+  font-style: 'Droid Sans';
+  font-size: 14px;
+  margin-right: 5px;
+  text-shadow: none;
+  text-decoration: none;
+  color: $nonanav;
+  background-color: $contentbg;
+ }
+ 
+.bottomLinks > li > a:focus {
+  outline: thin dotted;
+  background-color: $contentbg;
+  color: $linkc;
+  text-decoration: none;
+}
+
+.bottomLinks > li > a {
+  color: $mainblue;
+    height:93px;
+  width:33px;
+  padding: 5px 5px 5px 5px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 0px;
+  font-style: 'Droid Sans';
+  font-size: 14px;
+  margin-right: 5px;
+  text-shadow: none;
+  text-decoration: none;
+  line-height:inherit;
+}
+ 
+//styles tables within the site
+td, th { padding: 10px 10px 8px 10px; }
+tr {width: 100%;}
+td { text-align: left;}
+table { border-collapse: collapse; width: 100%; margin-top: 5px; margin-bottom: 20px;}
+th { background-color: transparent; color: $mainblue; text-align: left;}
+tr:even {
+background-color: rgb(245, 248, 248);
+} 
+
+//styles delete 'x' in tables
+.icon {
+  color: $red;
+  font-size: 0.5ems;
+  background: transparent;
+  border: none; 
+  padding: 7px 8px 3px 8px; 
+  font-weight: bold;
+  
+}
+
+.icon:hover {
+  -webkit-box-shadow: 1px 1px 0px 0px #303a3b;
+  box-shadow: 1px 1px 0px 0px #303a3b;
+  text-decoration: none;
+}
+
+.icon:active {
+  -webkit-box-shadow: inset 1px 1px 0px 0px #303a3b;
+  box-shadow: inset 1px 1px 0px 0px #303a3b;
+}
+
+//truncates any long text when window is shrunk
+.truncate {
+  white-space:nowwrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+//styles some main links to make them stand out more
+.link {
+  text-decoration: underline;
+}
+ 
+/**** footer styles ****/
+footer {
+  height: 128px;
+  background-color: $footerc;
+  text-align: center;
+  color: #858585;
+  padding-top: 10px;
+  box-sizing: border-box;
+  
+  ul.nav-pills {
+    margin-top: 30px;
+  }
+  
+  ul.nav-pills li a {
+    -webkit-border-radius: $roundedpx;
+    border-radius: $roundedpx;
+    font-weight: 700;
+    color: $linkc;
+    font-size: 0.9375em;
+    text-shadow: none;
+    padding: 8px 12px;
+  }
+  
+  ul.nav-pills li a:hover {
+    background: transparent;
+    color: $mainblue;
+  }
+  
+  ul.nav-pills li a:active {
+    background: transparent;
+    color: $footerc;
+  }
+  
+  ul.nav-pills li a:focus {
+    outline: thin dotted;
+    background-color: transparent !important;
+    color: $linkc;
+    text-decoration: none;
+  }
+  
+  ul.nav-pills li.active a {
+    background: $mainblue;
+    text-shadow: 0px -1px 1px $shadow;
+    filter: dropshadow(color=$shadow, offx=0, offy=-1);
+    color: #fff;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  
+  ul.nav-pills li.active a:hover {
+    background: $mainblue;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  
+  ul.nav-pills li.active a:focus {
+    outline: thin dotted;
+    background-color: $mainblue !important;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+}
+
+
+
+/**** responsive styles ****/
+@media (max-width: 979px) { 
+	.navbar-inner a.brand {
+		padding-top: 35px;
+	}
+	
+	div.header-right {
+		float: none;
+	}
+	.navbar-inverse nav {
+		margin-right: 30px;
+	}
+	
+	.signinfo {
+		margin-right: 7px;
+	}
+	
+	.navbar-inverse .nav-collapse ul.nav-pills li a {
+		color: $darkblue;
+	}
+	
+	.navbar-inverse .nav-collapse ul.nav-pills li a:hover {
+		background: transparent;
+		color: $mainblue;
+	}
+	
+	.navbar-inverse .nav-collapse ul.nav-pills li a:active {
+		color: $footerc;
+	}
+	
+}
+
+@media (max-width: 767px) {
+	body {
+		height: auto;
+	}
+	
+  #username {
+	  display: none;
+  }
+	
+	.signinfo {
+	  margin-left: 0px;
+	}
+	
+	#signinfo-divider {
+	  display: none;
+	}
+	
+	h2 {
+    font-size: 1.5em;
+  }
+  
+  .widgetH {
+    padding-top: 20px;
+  }
+  
+  .footer-pills {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  ul.footer-pills li {
+    font-size: 0.75em;
+  }
+  
+  ul.nav-pills li a {
+    padding: 5px 8px !important; 
+    margin-bottom: 10px;
+  }
+  
+  ul.nav-pills {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+    margin-left: 20px;
+  }
+  
+  h1 {
+    font-size: 1.5em;
+  }
+  
+  h2 {
+    font-size: 1.25em;
+    margin-top: -20px;
+  }
+  
+  button.fullscreenbtn {
+    margin: 0px 10px 0px 0px;
+  }
+  
+  .footertext {
+    font-size: 0.625em;
+  }
+  
+  table {font-size: 0.625em;} 
+  td, th { padding: 10px 5px 8px 5px; }
+
+}

@@ -1,0 +1,100 @@
+<!--
+	displays a table of team members
+	team admin can add team members
+-->
+
+<h1>Team: <%= @team.name %></h1>
+
+<!-- displays notifications relating to team functions -->
+<div class="notifications">
+	<% if flash[:alert].present? %>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= alert %>
+		</div><!-- END alert alert-error -->
+		<% elsif flash[:notice].present? %>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<%= notice %>
+		</div> <!-- END alert alert-success -->
+	<% end %>
+</div><!-- END notifications -->
+
+<div class="contentBox">
+
+	<!-- area to add members to the team -->
+	<% if is_team_admin(@team.id)  %>
+	<div class="row-fluid">
+		<div class="span6">
+			<tr>
+				<h2>Add Member</h2>
+				<h3>You can add a new team member here.</h3>
+	     		<%= text_field_tag :email111%>
+	     		<%= button_tag("add", :class => "red-button pull-right", :id => "addMember")%>
+	     	</tr>
+     	</div> <!-- END span6 -->
+     	<div class="span6"></div>
+ 	</div> <!-- END row-fluid -->
+	<%end%>
+
+	<h2> Members </h2>
+	<div id ="members">
+		<%= render 'list' %>
+	</div> <!-- END members -->
+</div> <!-- END contentBox -->
+
+<!-- extra function links appearing below page content -->
+<div class="bottomLinks pull-right">
+	<% if is_team_admin(@team.id)  %> <%= link_to 'Edit Name', edit_team_path(@team) %> | <% end %>
+	<%= link_to 'Back to Teams', teams_path %>
+</div>
+
+<script>
+//autocomplete email address
+$("#email111").click(function() {
+	//alert( <%= raw (@tags)%>);
+    var availableTags = <%= raw (@tags)%>;
+    $("#email111").autocomplete({
+      source: availableTags
+    });
+  });
+
+// add member via click
+$("#addMember").click(function(){
+	addMember();
+});
+  	
+  //add member via press enter
+$('#email111').keydown(function (e){
+if(e.keyCode == 13) {
+	addMember()
+}
+});
+
+function addMember() {
+	var r=confirm("Add " + $("#email111").val() + "?");
+	if (r==true)
+	{
+		$.ajax({
+			type: 'GET',
+			url: "<%= params[:id] %>/addMember", 
+	  		data: {
+	  			email:$("#email111").val(), 
+	  			team:$("#teamid").val()
+			},
+			dataType: "text",
+			success: function(data, status, xhr) {
+				$("#members").html(data);
+			}
+		});
+	}
+
+}
+
+// temp fix for body height
+if ($('body').height() <= 760 ) {
+	$("body").css("height", "auto");
+} else {
+	$("body").css("height", "100%");
+}
+</script>
