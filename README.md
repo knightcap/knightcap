@@ -94,19 +94,23 @@ FAQ
 Vanila Ruby
 
 Q: I cannot install the mysql2 gem
+
 A: This may seem obvious, however ensure that you have the MySQL server installed before you attempt to install the mysql2 gem.
 
 
+
 Q: I am getting errors when trying to run the application using Windows
+
 A: There is a known bug with ruby on windows. Go to the Gemfile, and remove the part that says `platform :ruby do --- end` place those gems outside of the block.  
 
 
 
 Jruby
 
-Q: I keep on getting out of memory exceptions when deploying :knightcap.
-A: Most likely there is not enough memory allocated to Tomcat. On a linux machine this variable can be changed at location `/etc/default/tomcat7` Change the JAVA_OPTS line to something like the following: 
 
+Q: I keep on getting out of memory exceptions when deploying :knightcap.
+
+A: Most likely there is not enough memory allocated to Tomcat. On a linux machine this variable can be changed at location `/etc/default/tomcat7` Change the JAVA_OPTS line to something like the following: 
 `JAVA_OPTS="-Djava.awt.headless=true -Xmx2048m -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode"`
 
 the section `-Xmx2048m` is the amount of memory (in mb) allocated to Tomcat, the above example is 2gb. A good minimum to use is 512mb.
